@@ -6,6 +6,7 @@
     border-radius: 25px;
     font-family: Arial, Helvetica, sans-serif;
     padding: 15px;
+    cursor: pointer;
 }
 .job__prof h4{
     margin-top: -15px;

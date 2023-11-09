@@ -1,10 +1,48 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import nitclogo from '../assets/nitclogo.png'
 import './header.css'
 import Login from './Login';
 import { useStateValue } from './StatePovider';
+import { useAuthStateValue } from '../context/AuthStateProvider';
+import { Link } from 'react-router-dom';
 const Header = ({ role, isAuthenticated, onLogout }) => {
   const [{openloginmodal},dipatch]=useStateValue();
+  const [{user},authdispatch]=useAuthStateValue();
+  console.log(user)
+  useEffect(()=>{
+    fetchuser();
+  },[])
+  const fetchuser=async ()=>{
+    try {
+      // Define the URL of the API you want to make a GET request to
+      const apiUrl = 'http://localhost:8000/myself'; // Replace with your API URL
+
+      // Use the fetch API with async/await
+      const response = await fetch(apiUrl,{
+        credentials: 'include'
+      });
+
+      if (!response.ok) {
+        console.log('user is null')
+
+        throw new Error('Network response was not ok');
+       
+      }
+
+      const responseData = await response.json();
+      if(response.ok){
+        authdispatch({
+          type:"LOGIN",
+          payload:responseData
+        })
+        
+      }
+     
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+
+  }
   const toggleLogin = () => {
     if(openloginmodal){
       dipatch({
@@ -16,6 +54,16 @@ const Header = ({ role, isAuthenticated, onLogout }) => {
         })
   }
   };
+  const logout=()=>{
+    logoutuser();
+    authdispatch({
+      type:'LOGOUT'
+    })
+
+  }
+  const logoutuser=async()=>{
+      fetch('http://localhost:8000/logout',{credentials:'include'})
+  }
   const userLinks = (
     <ul  className='header__nav'>
     <l1>Home</l1>
@@ -27,7 +75,7 @@ const Header = ({ role, isAuthenticated, onLogout }) => {
   const facultyLinks = (
     <ul  className='header__nav'>
       <li>Home</li>
-      <li>Post Jobs</li>
+     <Link style={{ textDecoration: 'none',color:'white' }} to={"/postjob"}><li>Post Jobs</li></Link> 
       <li>Applied Students</li>
       <li>Logout</li>
     </ul>
@@ -37,13 +85,13 @@ const Header = ({ role, isAuthenticated, onLogout }) => {
       <li>Home</li>
       <li>Notification</li>
       <li>Applied Jobs</li>
-      <li>Logout</li>
+      <li onClick={logout}>Logout</li>
     </ul>
   );
   let links;
-  if (role === 'faculty') {
+  if (user && user.userType === 'faculty') {
     links = facultyLinks;
-  } else if (role === 'student') {
+  } else if (user && user.userType === 'student') {
     links = studentLinks;
   } else {
     links = userLinks;

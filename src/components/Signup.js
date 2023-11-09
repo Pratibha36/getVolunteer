@@ -6,8 +6,9 @@ function Signup() {
   const [studentData, setStudentData] = useState({
     name: '',
     email: '',
-    phone: '',
-    rollNumber: '',
+    password:'',
+    contact: '',
+    personId: '',
     gender: 'Male',
     department: '',
     program: '',
@@ -16,8 +17,9 @@ function Signup() {
   const [facultyData, setFacultyData] = useState({
     name: '',
     email: '',
-    phone: '',
-    facultyID: '',
+    password:'',
+    contact: '',
+    personId: '',
     gender: 'Male',
     department: '',
     areaOfInterest: '',
@@ -50,13 +52,14 @@ function Signup() {
     setError(null);
 
     const user = {
-      type: userType,
+      userType: userType,
       ...(userType === 'student' ? studentData : facultyData),
     };
 
     try {
+      console.log(user);
       // Send POST request to your server
-      const response = await fetch('/your-api-endpoint', {
+      const response = await fetch('http://localhost:8000/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -66,7 +69,6 @@ function Signup() {
 
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem('user', JSON.stringify(data));
         dispatch({type:"LOGIN",payload:data})
         setLoading(false);
       } else {
@@ -74,7 +76,7 @@ function Signup() {
         setError(errorData.error);
         setLoading(false);
       }
-    } catch (error) {
+    } catch (error) { 
       setError('An error occurred while processing your request.');
       setLoading(false);
     }
@@ -112,19 +114,27 @@ function Signup() {
               />
             </label>
             <label>
+              Password:
+              <input
+                type="password"
+                value={studentData.password}
+                onChange={(e) => handleInputChange(e, 'student', 'password')}
+              />
+            </label>
+            <label>
               Phone Number:
               <input
                 type="text"
-                value={studentData.phone}
-                onChange={(e) => handleInputChange(e, 'student', 'phone')}
+                value={studentData.contact}
+                onChange={(e) => handleInputChange(e, 'student', 'contact')}
               />
             </label>
             <label>
               Roll Number:
               <input
                 type="text"
-                value={studentData.rollNumber}
-                onChange={(e) => handleInputChange(e, 'student', 'rollNumber')}
+                value={studentData.personId}
+                onChange={(e) => handleInputChange(e, 'student', 'personId')}
               />
             </label>
             <label>
@@ -225,19 +235,27 @@ function Signup() {
               />
             </label>
             <label>
+              Password:
+              <input
+                type="password"
+                value={facultyData.password}
+                onChange={(e) => handleInputChange(e, 'faculty', 'password')}
+              />
+            </label>
+            <label>
               Phone Number:
               <input
                 type="text"
-                value={facultyData.phone}
-                onChange={(e) => handleInputChange(e, 'faculty', 'phone')}
+                value={facultyData.contact}
+                onChange={(e) => handleInputChange(e, 'faculty', 'contact')}
               />
             </label>
             <label>
               Faculty ID:
               <input
                 type="text"
-                value={facultyData.facultyID}
-                onChange={(e) => handleInputChange(e, 'faculty', 'facultyID')}
+                value={facultyData.personId}
+                onChange={(e) => handleInputChange(e, 'faculty', 'personId')}
               />
             </label>
             <label>
@@ -288,6 +306,7 @@ function Signup() {
         )}
 
         <button type="submit">Submit</button>
+        {error && <div>{error}</div>}
       </form>
     </div>
   );
