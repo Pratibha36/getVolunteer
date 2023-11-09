@@ -63,6 +63,7 @@ const Header = ({ role, isAuthenticated, onLogout }) => {
   }
   const logoutuser=async()=>{
       fetch('http://localhost:8000/logout',{credentials:'include'})
+     
   }
   const userLinks = (
     <ul  className='header__nav'>
@@ -77,7 +78,7 @@ const Header = ({ role, isAuthenticated, onLogout }) => {
       <li>Home</li>
      <Link style={{ textDecoration: 'none',color:'white' }} to={"/postjob"}><li>Post Jobs</li></Link> 
       <li>Applied Students</li>
-      <li>Logout</li>
+      <li onClick={logout}>Logout</li>
     </ul>
   );
   const studentLinks = (

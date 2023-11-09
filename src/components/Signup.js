@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuthStateValue } from '../context/AuthStateProvider';
+import { Navigate } from 'react-router-dom';
 
 function Signup() {
   const [userType, setUserType] = useState('');
@@ -46,6 +47,10 @@ function Signup() {
     }
   };
 
+  // useEffect(()=>{
+
+  // })
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -83,7 +88,9 @@ function Signup() {
   };
 
   return (
+    !user ?
     <div>
+
       <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
         <label>
@@ -309,6 +316,7 @@ function Signup() {
         {error && <div>{error}</div>}
       </form>
     </div>
+    : <Navigate to="/" replace={true} />
   );
 }
 
