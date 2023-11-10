@@ -87,7 +87,7 @@ const Login = () => {
   };
 
   return (
-    <div className={`offcanvas-login ${openloginmodal    ? 'open' : ''}`}>
+    <div className={`offcanvas-login ${openloginmodal    ? 'open' : ''} `}>
         <div className='overlay'>
       <div className="offcanvas-content" ref={loginContainerRef}>
         <button className="close-button" onClick={onClose}>

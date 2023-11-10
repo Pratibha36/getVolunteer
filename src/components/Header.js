@@ -24,7 +24,6 @@ const Header = ({ role, isAuthenticated, onLogout }) => {
 
       if (!response.ok) {
         console.log('user is null')
-
         throw new Error('Network response was not ok');
        
       }
