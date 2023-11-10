@@ -30,7 +30,7 @@ export const PostJob = () => {
     const [image, setImage] = useState(null);
     const [location, setLocation] = useState('');
     const editor = useRef(null);
-	const [content, setContent] = useState('');
+	  const [content, setContent] = useState();
     const [value, onChange] = useState(new Date());
     const[redirect,setredirect]=useState(false);
     const navigate = useNavigate();
@@ -38,7 +38,7 @@ export const PostJob = () => {
     const job={
         heading:jobHeading,
         type:jobType,
-        description:content,
+        description:`<div style="font-family:Arial, Helvetica, sans-serif">`+content+`</div>`,
         keywords:keywords,
         startingDate:startDate,
         endingDate:endDate,
@@ -68,7 +68,7 @@ export const PostJob = () => {
       }else{
         setLoading(false);
         toast("Congratulation!!!! You have posted your Job")
-        navigate('/myjob')
+        navigate('/viewjob'+1234)
       }   
     }
 
@@ -128,7 +128,9 @@ export const PostJob = () => {
             </select>
           </div>
           <label style={{color:"rgb(101, 99, 99)"}} htmlFor="jobdesc"><span style={{color:"red"}}>*</span>Job Desciption:</label>
-          <JoditEditor className='postjob__jobdesc' value={content} onChange={newcontent=>setContent(newcontent)} />
+          <JoditEditor  className='postjob__jobdesc' value={content} 
+          onChange={
+            newcontent=>setContent(newcontent)} />
           <div className='postjob__keyword'>
             <label style={{color:"rgb(101, 99, 99)",marginRight:"20px"}} htmlFor="keywords" >Keywords:</label>
             <input

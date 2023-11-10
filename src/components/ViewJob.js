@@ -7,14 +7,19 @@ import DateRangeIcon from '@mui/icons-material/DateRange';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import {isoToDate} from '../funtions/Function'
+import { useAuthStateValue } from '../context/AuthStateProvider';
+import { StudentList } from './StudentList';
 
 const ViewJob = ({}) => {
+    const [{user},authdispatch]=useAuthStateValue();
     const htmlelem="<h1>hi<h1>"
     const [jobDetails,setJobDetails]=useState(null);
     const [facultyDetails,setFacultyDetails]=useState(null);
     const[applied,setapplied]=useState(false);
-    const jobId=87704710;
+
+    const jobId=59200730;
     useEffect(()=>{
+
         fetchJobWithId();
         // fetchFacultyDetails();
     },[])
@@ -133,14 +138,17 @@ const ViewJob = ({}) => {
                 <p style={{paddingRight:"10px"}}><span style={{color:"rgb(101, 99, 99)"}}>Posted on:</span> {isoToDate(jobDetails.postDate)} </p>
                 <p style={{paddingRight:"10px"}}><span style={{color:"rgb(101, 99, 99)"}}>Openings:</span> 10</p>
                 <p style={{paddingRight:"10px"}}><span style={{color:"rgb(101, 99, 99)"}}>Applicants:</span> {jobDetails.applicant}</p>
-                <button className='viewjob__button' onClick={applyToJob}>Apply Now</button>
+                {user.userType==="student" ?<button className='viewjob__button' onClick={applyToJob}>Apply Now</button>:""}
             </div>
         </div>
         <div className='viewjobcard_desc'>
-            <p>{jobDetails.description}</p>
-            <div dangerouslySetInnerHTML={{ __html: htmlelem }} />
+            <div  dangerouslySetInnerHTML={{ __html:jobDetails.description}} />
         </div> 
-        </div>       
+        </div>  
+        <div>
+          <StudentList/>
+          
+          </div>     
     </div>
   )
 }
