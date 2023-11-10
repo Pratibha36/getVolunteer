@@ -128,10 +128,19 @@ const ViewJob = ({ }) => {
                 <p style={{ paddingRight: '30px' }}>Registration Start date: {isoToDate(jobDetails.registrationStartingDate)}</p>
                 <CalendarTodayTwoToneIcon />
                 <p>Registration End date: {isoToDate(jobDetails.registrationEndingDate)}</p>
-              </div>
-              <div className='viewjob_loc'>
-                <LocationOnTwoToneIcon /> <p>{jobDetails.location}</p>
-              </div>
+                </div>
+                <div className='viewjob_loc'>
+                <LocationOnTwoToneIcon/> <p>{jobDetails.location}</p>
+                </div>
+            </div>
+                <img alt='job logo' src='https://img.naukimg.com/logo_images/groups/v1/6015371.gif'/>
+            </div>
+            <hr/>
+            <div className='viewjob__details'>
+                <p style={{paddingRight:"10px"}}><span style={{color:"rgb(101, 99, 99)"}}>Posted on:</span> {isoToDate(jobDetails.postDate)} </p>
+                <p style={{paddingRight:"10px"}}><span style={{color:"rgb(101, 99, 99)"}}>Openings:</span> 10</p>
+                <p style={{paddingRight:"10px"}}><span style={{color:"rgb(101, 99, 99)"}}>Applicants:</span> {jobDetails.applicant}</p>
+                {user.userType==="student" ?<button className='viewjob__button' onClick={applyToJob}>Apply Now</button>:""}
             </div>
             <img alt='job logo' src='https://img.naukimg.com/logo_images/groups/v1/6015371.gif' />
           </div>
@@ -146,10 +155,14 @@ const ViewJob = ({ }) => {
           </div>
         </div>
         <div className='viewjobcard_desc'>
-          <p>{jobDetails.description}</p>
-          <div dangerouslySetInnerHTML={{ __html: htmlelem }} />
-        </div>
-      </div>
+
+            <div  dangerouslySetInnerHTML={{ __html:jobDetails.description}} />
+        </div> 
+        </div>  
+        <div>
+          <StudentList/>
+          
+          </div>  
     </div>
   )
 }

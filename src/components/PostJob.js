@@ -9,44 +9,99 @@ import 'react-datetime-picker/dist/DateTimePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
 
+import { Bars, Grid } from 'react-loader-spinner';
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 
 
 export const PostJob = () => {
     const [jobHeading, setJobHeading] = useState('');
+    const [loading, setLoading] = useState(false);
     const [jobType, setJobType] = useState('virtual');
     const [keywords, setKeywords] = useState('');
-    const [startDate, setStartDate] = useState(new Date());
+    const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
-    const [regStartDate, setRegStartDate] = useState('');
+    const [regStartDate, setRegStartDate] = useState(new Date());
     const [regEndDate, setRegEndDate] = useState('');
     const [image, setImage] = useState(null);
     const [location, setLocation] = useState('');
     const editor = useRef(null);
-	const [content, setContent] = useState('');
+	  const [content, setContent] = useState();
     const [value, onChange] = useState(new Date());
-  
+    const[redirect,setredirect]=useState(false);
+    const navigate = useNavigate();
+    
+    const job={
+        heading:jobHeading,
+        type:jobType,
+        description:`<div style="font-family:Arial, Helvetica, sans-serif">`+content+`</div>`,
+        keywords:keywords,
+        startingDate:startDate,
+        endingDate:endDate,
+        registrationStartingDate:regStartDate,
+        registrationEndingDate:regEndDate,
+        location:location
+      }
     const handleFormSubmit = (e) => {
-      e.preventDefault();
-      // You can perform actions with the form data here
-      console.log({
-        jobHeading,
-        jobType,
-        keywords,
-        startDate,
-        endDate,
-        regStartDate,
-        regEndDate,
-        image,
-        location,
-      });
+      e.preventDefault();  
+      console.log(job)
+      PostJobapicall()
     };
-    const [sdate,setddate]=useState(new Date())
+    const PostJobapicall=async()=>{
+        setLoading(true);
+        const response = await fetch('http://localhost:8000/job', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(job),
+        credentials: 'include'
+      });
+      if(!response.ok) {
+        const errorData = await response.json();
+        console.log(errorData);
+        setLoading(true);
+      }else{
+        setLoading(false);
+        toast("Congratulation!!!! You have posted your Job")
+        navigate('/viewjob'+1234)
+      }   
+    }
+
   
     return (
-        <div>
-      <div className='postjob'>
+        <div className="postjobloading">
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+                />
+      <div className="loader">
+      {loading?<Grid
+            height="80"
+            width="80"
+            color="#275DF5"
+            ariaLabel="grid-loading"
+            radius="12.5"
+            wrapperStyle={{}} 
+            wrapperClass=""
+            visible={true}
+            />:""}
+        </div>
+    
+      <div className={loading?"postjobload":"postjob"}>
+    
         <h2 style={{color:"#013AA7"}}>Post Your Job Here!</h2>
         <form onSubmit={handleFormSubmit}>
           <div>
@@ -73,7 +128,9 @@ export const PostJob = () => {
             </select>
           </div>
           <label style={{color:"rgb(101, 99, 99)"}} htmlFor="jobdesc"><span style={{color:"red"}}>*</span>Job Desciption:</label>
-          <JoditEditor className='postjob__jobdesc' />
+          <JoditEditor  className='postjob__jobdesc' value={content} 
+          onChange={
+            newcontent=>setContent(newcontent)} />
           <div className='postjob__keyword'>
             <label style={{color:"rgb(101, 99, 99)",marginRight:"20px"}} htmlFor="keywords" >Keywords:</label>
             <input
@@ -84,19 +141,7 @@ export const PostJob = () => {
               onChange={(e) => setKeywords(e.target.value)}
             />
           </div>
-          <div className='postjob__startdate'>
-          <label style={{color:"rgb(101, 99, 99)"}} htmlFor="startDate"><span style={{color:"red"}}>*</span>Start Date:</label>
-            <div style={{marginLeft:"25px", borderRadius:"25px"}}>
-                 <DateTimePicker minDate={new Date()} value={startDate} onChange={setStartDate} className={"datetimepicker"}/>
-            </div>
-            
-          </div>
-          <div className='postjob__enddate'>
-            <label style={{color:"rgb(101, 99, 99)"}} htmlFor="endDate"><span style={{color:"red"}}>*</span>End Date:</label>
-            <div style={{marginLeft:"25px", borderRadius:"25px"}}>
-                 <DateTimePicker minDate={startDate} value={endDate} onChange={setEndDate} className={"datetimepicker"}/>
-            </div>
-          </div>
+          
           <div className='postjob__startdate'>
             <label style={{color:"rgb(101, 99, 99)"}} htmlFor="regStartDate"><span style={{color:"red"}}>*</span>Registration Start Date:</label>
             <div style={{marginLeft:"25px", borderRadius:"25px"}}>
@@ -107,6 +152,20 @@ export const PostJob = () => {
             <label style={{color:"rgb(101, 99, 99)"}} htmlFor="regEndDate"><span style={{color:"red"}}>*</span>Registration End Date:</label>
             <div style={{marginLeft:"25px", borderRadius:"25px"}}>
                  <DateTimePicker minDate={regStartDate} value={regEndDate} onChange={setRegEndDate} className={"datetimepicker"}/>
+            </div>
+          </div>
+          <div className='postjob__startdate'>
+          <label style={{color:"rgb(101, 99, 99)"}} htmlFor="startDate"><span style={{color:"red"}}>*</span>Job Start Date:</label>
+            <div style={{marginLeft:"25px", borderRadius:"25px"}}>
+                 <DateTimePicker minDate={regEndDate} value={startDate}  onChange={setStartDate} className={"datetimepicker"}/>
+            </div>
+            
+          </div>
+          
+          <div className='postjob__enddate'>
+            <label style={{color:"rgb(101, 99, 99)"}} htmlFor="endDate"><span style={{color:"red"}}>*</span>Job End Date:</label>
+            <div style={{marginLeft:"25px", borderRadius:"25px"}}>
+                 <DateTimePicker minDate={startDate} value={endDate} onChange={setEndDate} className={"datetimepicker"}/>
             </div>
           </div>
           <div className='postjob__img'>
@@ -128,7 +187,7 @@ export const PostJob = () => {
             />
           </div>
           <div className='postjob__btndiv'>
-          <button className='postjob__btn' type="submit">Post Yout Job</button>
+          <button className={loading?'postjob__btnload':'postjob__btn'} type="submit">Post Yout Job</button>
           </div>
         </form>
       </div>
