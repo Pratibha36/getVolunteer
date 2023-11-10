@@ -58,15 +58,34 @@ const Header = ({ role, isAuthenticated, onLogout }) => {
     authdispatch({
       type:'LOGOUT'
     })
-
   }
   const logoutuser=async()=>{
-      fetch('http://localhost:8000/logout',{credentials:'include'})
+    try {
+      const apiUrl = 'http://localhost:8000/logout'
+      // Use the fetch API with async/await
+      const response = await fetch(apiUrl,{
+        method:"GET",
+        credentials: 'include'
+      });
+
+      if (!response.ok) {
+        console.log('error in log out')
+        throw new Error('Network response was not ok');
+      }
+
+      const responseData = await response.json();
+      if(response.ok){
+        console.log(responseData)
+        window.location.href = '/'
+      }
      
+    } catch (error) {
+      console.error('Error in logout:', error);
+    }     
   }
   const userLinks = (
     <ul  className='header__nav'>
-    <l1>Home</l1>
+    <li><Link className='header__li' to="/">Home</Link></li>
     <li>Jobs</li>
     <l1 onClick={toggleLogin}>Log in</l1>
     <Login/>
@@ -74,17 +93,17 @@ const Header = ({ role, isAuthenticated, onLogout }) => {
   );
   const facultyLinks = (
     <ul  className='header__nav'>
-      <li>Home</li>
-     <Link style={{ textDecoration: 'none',color:'white' }} to={"/postjob"}><li>Post Jobs</li></Link> 
-      <li>Applied Students</li>
+      <li><Link className='header__li' to="/">Home</Link></li>
+      <li><Link className='header__li' to={"/postjob"}>Post Jobs</Link></li>
+      <li><Link className='header__li' to={"/"}>Applied Students</Link></li>
       <li onClick={logout}>Logout</li>
     </ul>
   );
   const studentLinks = (
     <ul  className='header__nav'>
-      <li>Home</li>
+      <li><Link className='header__li' to="/">Home</Link></li>
       <li>Notification</li>
-      <li>Applied Jobs</li>
+      <li><Link className='header__li' to={"/"}>Applied Jobs</Link></li>
       <li onClick={logout}>Logout</li>
     </ul>
   );
