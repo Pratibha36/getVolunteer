@@ -26,6 +26,9 @@
 
 }
 .header__nav li  {
-    margin: 0px 40px;
-    
+    margin: 0px 40px;   
+}
+.header__li{
+    color: white;
+    text-decoration: none;
 }
