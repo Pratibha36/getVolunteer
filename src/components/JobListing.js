@@ -16,7 +16,7 @@ export const JobListing = () => {
 
     const fetchAllJobs = async () => {
         try {
-          const apiUrl = 'http://localhost:8000/job'; // Replace with your API URL
+          const apiUrl = (user.userType==="student")?'http://localhost:8000/application_student':'http://localhost:8000/job'; // Replace with your API URL
           // Use the fetch API with async/await
           const response = await fetch(apiUrl, {
             method: "GET",

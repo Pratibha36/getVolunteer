@@ -103,7 +103,7 @@ const Header = ({ role, isAuthenticated, onLogout }) => {
     <ul  className='header__nav'>
       <li><Link className='header__li' to="/">Home</Link></li>
       <li>Notification</li>
-      <li><Link className='header__li' to={"/"}>Applied Jobs</Link></li>
+      <li><Link className='header__li' to={"/appliedstudents"}>Applied Jobs</Link></li>
       <li onClick={logout}>Logout</li>
     </ul>
   );

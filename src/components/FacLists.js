@@ -39,8 +39,8 @@ export const FacLists = (props) => {
     </div>
     <div className='job_loc'>
       <LocationOnTwoToneIcon /> <p>{props.location}</p>
-      <button style={{marginLeft:"400px",borderRadius:"25px", backgroundColor:"#f39b31", color:"white",fontWeight:"bold",
-    border:"1px solid #f39b31", height:"30px",textDecoration:"none",cursor:"pointer"}}>View Applied Student</button>
+      {user.userType==="faculty" && <button style={{marginLeft:"400px",borderRadius:"25px", backgroundColor:"#f39b31", color:"white",fontWeight:"bold",
+    border:"1px solid #f39b31", height:"30px",textDecoration:"none",cursor:"pointer"}}>View Applied Student</button>}
     </div>
 
   </div>)
