@@ -1,34 +1,117 @@
 /* OffCanvasLogin.css */
 
 .offcanvas-login {
-    position: fixed;
-    top: 0;
-    right: -500px; /* Adjust as needed */
-    width: 500px; /* Adjust as needed */
-    height: 100%;
-    background-color: #fff;
-    transition: right 0.3s ease-in-out;
-    box-shadow: -5px 0 5px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    border-top-left-radius: 25px;
+  position: fixed;
+  top: 0;
+  right: -500px; /* Adjust as needed */
+  width: 500px; /* Adjust as needed */
+  height: 100%;
+  background-color: #fff;
+  transition: right 0.3s ease-in-out;
+  box-shadow: -5px 0 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  border-top-left-radius: 25px;
+}
+
+.offcanvas-login.open {
+  right: 0;
+}
+
+.offcanvas-content {
+  padding: 20px;
+}
+
+.close-button {
+  position: absolute;
+  background-color: white;
+  border: none;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.login-text{
+padding: 30px 0px;
+}
+
+h2,h3{
+color: black;
+font-family: Arial, Helvetica, sans-serif;
+}
+
+.login-button{
+margin-top: 30px;
+text-transform: capitalize;
+width: 100%;
+display: inline-block;
+background-color: #275DF5;
+border-radius: 10px;
+-webkit-box-shadow: 0 2px 6px 0 rgba(0,0,0,0.2);
+box-shadow: 0 2px 6px 0 rgba(0,0,0,0.2);
+min-width: 123px;
+padding: 8px 16px;
+height: 36px;
+color: #ffffff;
+font-weight: 500;
+text-align: center;
+line-height: 18px;
+cursor: pointer;
+font-size: 14px;
+border-width: 0;
+}
+
+.offcanvas-content input {
+padding: 10px 20px;
+border: 1px solid;
+border-radius: 10px;
+border-color:  #4a90e2;
+box-sizing: border-box;
+width: 100%;
+}
+
+.offcanvas-content input:active{
+border-color: #4a90e2;
+}
+
+.signup-button{
+  margin-top: 30px;
+  text-transform: capitalize;
+  width: 100%;
+  display: inline-block;
+  background-color: #ffffff;
+  border-radius: 10px;
+  -webkit-box-shadow: 0 2px 6px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 2px 6px 0 rgba(0,0,0,0.2);
+  min-width: 123px;
+  padding: 8px 16px;
+  height: 36px;
+  color: #275DF5;
+  font-weight: 500;
+  text-align: center;
+  line-height: 18px;
+  cursor: pointer;
+  font-size: 14px;
+  border-width: 1px;
+  border-color: #275DF5;
   }
-  
-  .offcanvas-login.open {
-    right: 0;
-  }
-  
-  .offcanvas-content {
-    padding: 20px;
-  }
-  
-  .close-button {
-    position: absolute;
-    background-color: white;
-    border: none;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-  }
-  
-  /* Add more styles as needed */
-  
+
+.or-sec {
+    margin: 0 auto;
+    width: 100%;
+    border-bottom: 1px solid #d4dfef;
+    position: relative;
+    margin-bottom: 28px;
+    margin-top: 60px;
+}
+.or-text {
+  position: absolute;
+    left: 48%;
+    background: white;
+    width: 20px;
+    text-align: center;
+    margin-top: -7px;
+    font-size: 12px;
+    color: #8993a4;
+}
+
+/* Add more styles as needed */

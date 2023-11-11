@@ -51,20 +51,26 @@ const Login = () => {
         <button className="close-button" onClick={onClose}>
         <CloseTwoToneIcon fontSize='large'/>
         </button>
-        <h2>Login</h2>
+        <h2 className="login-text">Login</h2>
+        <h3>Email ID</h3>
         <input
           type="text"
-          placeholder="Username"
+          placeholder="Email ID"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
+        <h3>Password</h3>
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button onClick={handleLogin}>Login</button>
+        <button className="login-button" onClick={handleLogin}>Login</button>
+        <div class="or-sec"> 
+        <span class="or-text">OR</span>
+         </div>
+        <button className="signup-button" onClick={handleLogin}>Sign Up</button> /* Update sign up handle */
       </div>
     </div>
   );

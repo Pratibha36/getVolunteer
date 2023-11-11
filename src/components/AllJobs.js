@@ -6,7 +6,7 @@ const AllJobs = () => {
   return (
     <div className='alljobs' >
     <h1>
-        All Jobs
+        Current Opportunities
     </h1>
     <Job/>
     <Job/>

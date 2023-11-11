@@ -20,7 +20,7 @@ const Header = ({ role, isAuthenticated, onLogout }) => {
     <ul  className='header__nav'>
     <l1>Home</l1>
     <li>Jobs</li>
-    <l1 onClick={toggleLogin}>Log in</l1>
+    <l1 onClick={toggleLogin}>Login</l1>
     <Login/>
   </ul>
   );
@@ -53,7 +53,7 @@ const Header = ({ role, isAuthenticated, onLogout }) => {
       <div className="header">
         <div className='header__icons'>
         <img className='header__logo' src={nitclogo} alt='nitclogo'/>
-        <h1>Volunteer app</h1>
+        <h1 class='app_name'>Get Volunteers</h1> 
         </div>
         <div>  
           <div className='header__item'>
