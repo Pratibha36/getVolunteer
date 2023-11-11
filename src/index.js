@@ -11,11 +11,14 @@ import { StateProvider } from './components/StatePovider';
 import reducer, { initialState } from './components/reducer';
 import Introcontent from './components/Introcontent';
 import AllJobs from './components/AllJobs';
-import { Login } from '@mui/icons-material';
+import { Login, PostAdd } from '@mui/icons-material';
 import Signup from './components/Signup';
-import { AuthStateProvider } from './context/AuthStateProvider';
+import { AuthStateProvider, useAuthStateValue } from './context/AuthStateProvider';
 import authReducer, { authInitialState } from './context/AuthReducer';
-
+import ViewJob from './components/ViewJob';
+import { PostJob } from './components/PostJob';
+import { JobListing } from './components/JobListing';
+import Admin from './components/Admin';
 
 const router = createBrowserRouter([
   {
@@ -31,9 +34,26 @@ const router = createBrowserRouter([
       },{
           path:"/Signup",
           element:<Signup/>
-      }
+      },{
+        path:"/viewjob/:jobid",
+        element:<ViewJob/>
+    },{
+      path:"/postjob",
+      element:<PostJob/>
+    },{path:"/appliedstudents",
+       element:<JobListing/>
+    },{path:"/appliedstudents/:jobid",
+    element:<ViewJob/>
+    },{
+      path:"/appliedjobs",
+      element:<ViewJob/>
+    }
+
     ]
-  },
+  },{
+    path:"/admin",
+    element:<Admin/>
+  }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

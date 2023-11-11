@@ -1,0 +1,17 @@
+.pagination{
+    margin: 10px;
+    border-radius: 35px;
+    width: 40px;
+    padding: 10px;
+    cursor: pointer;
+}
+.paginationactive{
+    margin: 10px;
+    width: 40px;
+    font-weight: bold;
+    border-radius: 35px;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #013AA7;
+    color: white;
+}

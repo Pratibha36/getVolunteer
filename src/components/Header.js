@@ -1,10 +1,47 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import nitclogo from '../assets/nitclogo.png'
 import './header.css'
 import Login from './Login';
 import { useStateValue } from './StatePovider';
+import { useAuthStateValue } from '../context/AuthStateProvider';
+import { Link } from 'react-router-dom';
 const Header = ({ role, isAuthenticated, onLogout }) => {
   const [{openloginmodal},dipatch]=useStateValue();
+  const [{user},authdispatch]=useAuthStateValue();
+  console.log(user)
+  useEffect(()=>{
+    fetchuser();
+  },[])
+  const fetchuser=async ()=>{
+    try {
+      // Define the URL of the API you want to make a GET request to
+      const apiUrl = 'http://localhost:8000/myself'; // Replace with your API URL
+
+      // Use the fetch API with async/await
+      const response = await fetch(apiUrl,{
+        credentials: 'include'
+      });
+
+      if (!response.ok) {
+        console.log('user is null')
+        throw new Error('Network response was not ok');
+       
+      }
+
+      const responseData = await response.json();
+      if(response.ok){
+        authdispatch({
+          type:"LOGIN",
+          payload:responseData
+        })
+        
+      }
+     
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+
+  }
   const toggleLogin = () => {
     if(openloginmodal){
       dipatch({
@@ -16,34 +53,64 @@ const Header = ({ role, isAuthenticated, onLogout }) => {
         })
   }
   };
+  const logout=()=>{
+    logoutuser();
+    authdispatch({
+      type:'LOGOUT'
+    })
+  }
+  const logoutuser=async()=>{
+    try {
+      const apiUrl = 'http://localhost:8000/logout'
+      // Use the fetch API with async/await
+      const response = await fetch(apiUrl,{
+        method:"GET",
+        credentials: 'include'
+      });
+
+      if (!response.ok) {
+        console.log('error in log out')
+        throw new Error('Network response was not ok');
+      }
+
+      const responseData = await response.json();
+      if(response.ok){
+        console.log(responseData)
+        window.location.href = '/'
+      }
+     
+    } catch (error) {
+      console.error('Error in logout:', error);
+    }     
+  }
   const userLinks = (
     <ul  className='header__nav'>
-    <l1>Home</l1>
-    <li>Jobs</li>
+    <li><Link className='header__li' to="/">Home</Link></li>
+    <li><Link className='header__li' to="/">Jobs</Link></li>
     <l1 onClick={toggleLogin}>Login</l1>
     <Login/>
   </ul>
   );
   const facultyLinks = (
     <ul  className='header__nav'>
-      <li>Home</li>
-      <li>Post Jobs</li>
-      <li>Applied Students</li>
-      <li>Logout</li>
+      <li><Link className='header__li' to="/">Home</Link></li>
+      <li><Link className='header__li' to={"/postjob"}>Post Jobs</Link></li>
+      <li><Link className='header__li' to={"/appliedstudents"}>Applied Students</Link></li>
+      <li onClick={logout}>Logout</li>
     </ul>
   );
   const studentLinks = (
     <ul  className='header__nav'>
-      <li>Home</li>
+      <li><Link className='header__li' to="/">Home</Link></li>
       <li>Notification</li>
-      <li>Applied Jobs</li>
-      <li>Logout</li>
+      <li><Link className='header__li' to={"/"}>Applied Jobs</Link></li>
+      <li onClick={logout}>Logout</li>
     </ul>
   );
   let links;
-  if (role === 'faculty') {
+  if (user && user.userType === 'faculty') {
     links = facultyLinks;
-  } else if (role === 'student') {
+  } else if (user && user.userType === 'student') {
     links = studentLinks;
   } else {
     links = userLinks;

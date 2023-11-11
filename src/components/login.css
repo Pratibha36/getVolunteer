@@ -115,3 +115,20 @@ border-color: #4a90e2;
 }
 
 /* Add more styles as needed */
+  
+  .offcanvas-login.open {
+    right: 0;
+  }
+  
+  .offcanvas-content {
+    padding: 20px;
+  }
+  
+  .close-button {
+    position: absolute;
+    background-color: white;
+    border: none;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+  }

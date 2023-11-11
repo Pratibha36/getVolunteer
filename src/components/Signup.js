@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
 import SignupLeft from './SignupLeft';
 import './signup.css';
+import React, { useEffect, useState } from 'react';
 import { useAuthStateValue } from '../context/AuthStateProvider';
+import { Navigate } from 'react-router-dom';
 
 function Signup() {
   const [userType, setUserType] = useState('');
   const [studentData, setStudentData] = useState({
     name: '',
     email: '',
-    phone: '',
-    rollNumber: '',
+    password:'',
+    contact: '',
+    personId: '',
     gender: 'Male',
     department: '',
     program: '',
@@ -18,8 +20,9 @@ function Signup() {
   const [facultyData, setFacultyData] = useState({
     name: '',
     email: '',
-    phone: '',
-    facultyID: '',
+    password:'',
+    contact: '',
+    personId: '',
     gender: 'Male',
     department: '',
     areaOfInterest: '',
@@ -46,19 +49,24 @@ function Signup() {
     }
   };
 
+  // useEffect(()=>{
+
+  // })
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
 
     const user = {
-      type: userType,
+      userType: userType,
       ...(userType === 'student' ? studentData : facultyData),
     };
 
     try {
+      console.log(user);
       // Send POST request to your server
-      const response = await fetch('/your-api-endpoint', {
+      const response = await fetch('http://localhost:8000/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -68,21 +76,23 @@ function Signup() {
 
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem('user', JSON.stringify(data));
         dispatch({type:"LOGIN",payload:data})
         setLoading(false);
       } else {
         const errorData = await response.json();
         setError(errorData.error);
         setLoading(false);
+        console.log(errorData)
       }
-    } catch (error) {
+    } catch (error) { 
       setError('An error occurred while processing your request.');
+      console.log(error)
       setLoading(false);
     }
   };
 
   return (
+    !user ?
     <div>
       <h2 className='register-text'>Register</h2>
       <div className='signup-canvas'><div className='left-panel'>
@@ -102,7 +112,7 @@ function Signup() {
         {userType === 'student' && (
           <div>
             <label>
-              Student Name
+              Student Namex
               <input
                 type="text"
                 value={studentData.name}
@@ -121,16 +131,16 @@ function Signup() {
               Phone Number
               <input
                 type="text"
-                value={studentData.phone}
-                onChange={(e) => handleInputChange(e, 'student', 'phone')}
+                value={studentData.contact}
+                onChange={(e) => handleInputChange(e, 'student', 'contact')}
               />
             </label>
             <label>
               Roll Number
               <input
                 type="text"
-                value={studentData.rollNumber}
-                onChange={(e) => handleInputChange(e, 'student', 'rollNumber')}
+                value={studentData.personId}
+                onChange={(e) => handleInputChange(e, 'student', 'personId')}
               />
             </label>
             <label>
@@ -234,16 +244,16 @@ function Signup() {
               Phone Number
               <input
                 type="text"
-                value={facultyData.phone}
-                onChange={(e) => handleInputChange(e, 'faculty', 'phone')}
+                value={facultyData.contact}
+                onChange={(e) => handleInputChange(e, 'faculty', 'contact')}
               />
             </label>
             <label>
               Faculty ID
               <input
                 type="text"
-                value={facultyData.facultyID}
-                onChange={(e) => handleInputChange(e, 'faculty', 'facultyID')}
+                value={facultyData.personId}
+                onChange={(e) => handleInputChange(e, 'faculty', 'personId')}
               />
             </label>
             <label>
@@ -298,6 +308,7 @@ function Signup() {
       </div>
       </div>
     </div>
+    : <Navigate to="/" replace={true} />
   );
 }
 

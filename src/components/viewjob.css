@@ -1,0 +1,83 @@
+.viewjob{
+    margin-top: 75px;
+}
+.viewjob__items{
+    line-height: 0.8;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+.viewjob__person{
+    margin-top: -10px;
+    color: rgb(101, 99, 99);
+    
+}
+.viewjobcard{
+    width: 800px;
+    background-color: white;
+    border-radius: 25px;
+    padding: 10px 30px;
+}
+.viewjobcard__heading{
+    font-weight: bold;
+    font-size: 18px;
+}
+.viewjobcard_desc{
+    margin-top: 30px;
+    width: 800px;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 10px 30px;
+    background-color: white;
+    border-radius: 25px;
+    
+}
+.viewjob__date{
+    display: flex;
+    color: rgb(101, 99, 99);
+    line-height: 0.1px;
+    border-left: 1px;
+}
+.viewjob_loc{
+    display: flex;
+    align-items: center;
+    margin-top: -5px;
+    color: rgb(101, 99, 99);
+}
+.view_jobimgadj{
+    display: flex;
+}
+.view_jobimgadj img{
+    padding: 30px;
+    margin: 30px;
+    width: 50px;
+    height: 50px;
+    border: 1px solid black;
+}
+.viewjob__details{
+    display: flex;
+}
+.viewjob__button{
+    background-color: #275DF5;
+    color: white;
+    font-weight: bold;
+    border: none;
+    width: 100px;
+    border-radius: 15px;
+    padding: 10px;
+    margin-left: auto;
+    cursor: pointer;
+}
+.disabled {
+    color: white;
+    font-weight: bold;
+    border: none;
+    width: 100px;
+    border-radius: 15px;
+    padding: 10px;
+    margin-left: auto;
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: gray;
+  }

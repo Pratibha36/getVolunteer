@@ -5,41 +5,79 @@ import CalendarMonthTwoToneIcon from '@mui/icons-material/CalendarMonthTwoTone';
 import CalendarTodayTwoToneIcon from '@mui/icons-material/CalendarTodayTwoTone';
 import EditCalendarTwoToneIcon from '@mui/icons-material/EditCalendarTwoTone';
 import DescriptionTwoToneIcon from '@mui/icons-material/DescriptionTwoTone';
+import { useAuthStateValue } from '../context/AuthStateProvider';
+import { useStateValue } from './StatePovider';
+import { Link } from 'react-router-dom';
+import {isoToDate} from '../funtions/Function'
+import { useState,useEffect } from 'react';
 
-export const Job = () => {
+export const Job = (props) => {
+  const [{ user }, authdispatch] = useAuthStateValue();
+  const [{ openloginmodal }, dispatch] = useStateValue();
+  // const [facultyDetails, setFacultyDetails] = useState(null);
+
+  // useEffect(() => {
+  //   // fetchJobWithId();
+  //   user && fetchFacultyDetails();
+  // }, [])
+
+  // const fetchFacultyDetails = async (facultyId) => {
+  //   const response = await fetch('http://localhost:8000/user/' + props.facultyId, {
+  //     method:"GET",
+  //     credentials: 'include'
+  //   })
+  //   if (!response.ok) {
+  //     throw new Error('Network response was not ok');
+  //   }
+  //   const responseData = await response.json();
+  //   if (response.ok) {
+  //     setFacultyDetails(responseData);
+  //   }
+
+  // }
+  console.log(props)
+  const jobcard = (<div className='jobs'>
+    <div className='job__f'>
+      <img src='https://img.naukimg.com/logo_images/groups/v1/6015371.gif' alt='noimage' />
+      <h3>{props.heading}</h3>
+    </div>
+    <div className='job__prof'> 
+      <h4>Posted By: {props.facultyName} </h4>
+     </div>
+    <div className='job__desc'>
+      </div>
+    <div className='job__date'>
+      <CalendarMonthTwoToneIcon />
+      <p>Start date: {isoToDate(props.startingDate)}</p>
+      <CalendarTodayTwoToneIcon />
+      <p>End date: {isoToDate(props.endingDate)}</p>
+      <EditCalendarTwoToneIcon />
+      <p>Posted on: {isoToDate(props.postDate)}</p>
+    </div>
+    <div className='job__key'>
+      <p>keywords</p>
+      <p>Java</p>
+      <p>hibernate</p>
+      <p>sql</p>
+      <p>database</p>
+    </div>
+    <div className='job_loc'>
+      <LocationOnTwoToneIcon /> <p>{props.location}</p>
+    </div>
+
+  </div>)
+
   return (
-    <div className='jobs'>
-        <div className='job__f'>
-            <img src='https://img.naukimg.com/logo_images/groups/v1/6015371.gif' alt='noimage' />
-        <h3>Teaching Assistant</h3>
+    <div>
+      {user ? (
+        <div><Link style={{textDecoration:'none'}} to={`/viewjob/${props._id}`}>{jobcard}</Link></div>
+      ) : (
+        <div>
+        <div onClick={() => { dispatch({ type: "OPEN_LOGIN_MODAL" }) }}>{jobcard}</div>
         </div>
-        <div className='job__prof'>
-        <h4>Prof shukla, </h4>
-        <p> Computer Science Department</p>
-        </div>
-        <div className='job__desc'>
-           
-            <p>As a Teaching Assistant you will be responsible for evaluating, guiding and invigilating students for Software System Labs. </p>
-        </div>
-        <div className='job__date'>
-        <CalendarMonthTwoToneIcon/>    
-        <p>Start date: 22nd Nov, 2023</p>
-        <CalendarTodayTwoToneIcon/>
-        <p>End date: 1st Dec, 2023</p>
-        <EditCalendarTwoToneIcon/>
-        <p>Posted on: 12th Nov, 2023</p>
-        </div>
-        <div className='job__key'>
-        <p>Good Communication</p>
-        <p>Data Structure & Algorithms</p>
-        <p>C/C++</p>
-        <p>Linux</p>
-        <p>database</p>
-        </div>
-        <div className='job_loc'>
-           <LocationOnTwoToneIcon/> <p>Calicut, Kerala</p>
-        </div>
-        
+      )
+      }
     </div>
   )
+
 }
