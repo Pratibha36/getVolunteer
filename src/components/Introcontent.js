@@ -25,7 +25,8 @@ const Introcontent = () => {
         backgroundRepeat: 'no-repeat' }}>
             <div className='introall'>
             <div className='introtext'>
-                <h1>Apply or Get Volunteers </h1>
+                <h1>NITC's finest volunteering platform</h1> 
+                <h1> to apply & get volunteers </h1>
                 <h1>EASILY!</h1>
             </div>
             <div>
@@ -42,7 +43,9 @@ const Introcontent = () => {
             </div>
             </div>
             <div className='intro_box'>
-                
+                <h3 classNane="content1">quer</h3>
+                <h3 classNane="content2">abbckas</h3>
+                <h3 classNane="content3 ">ghavs</h3>   
             </div>
     </div>
   )

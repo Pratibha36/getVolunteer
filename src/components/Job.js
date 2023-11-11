@@ -41,13 +41,11 @@ export const Job = (props) => {
       <img src='https://img.naukimg.com/logo_images/groups/v1/6015371.gif' alt='noimage' />
       <h3>{props.heading}</h3>
     </div>
-    <div className='job__prof'>
-      <h4>{props.facultyName} </h4>
-      <p> professor, NITC </p>
-    </div>
+    <div className='job__prof'> 
+      <h4>Posted By: {props.facultyName} </h4>
+     </div>
     <div className='job__desc'>
-      <p>{props.description}</p>
-    </div>
+      </div>
     <div className='job__date'>
       <CalendarMonthTwoToneIcon />
       <p>Start date: {isoToDate(props.startingDate)}</p>
@@ -72,7 +70,7 @@ export const Job = (props) => {
   return (
     <div>
       {user ? (
-        <div><Link to={`/viewjob/${props._id}`}>{jobcard}</Link></div>
+        <div><Link style={{textDecoration:'none'}} to={`/viewjob/${props._id}`}>{jobcard}</Link></div>
       ) : (
         <div>
         <div onClick={() => { dispatch({ type: "OPEN_LOGIN_MODAL" }) }}>{jobcard}</div>

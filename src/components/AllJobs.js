@@ -4,13 +4,20 @@ import { Job } from './Job'
 import { useAuthStateValue } from '../context/AuthStateProvider'
 import { useEffect } from 'react'
 import { useState } from 'react'
+import { Pagination } from './Pagination'
 
 const AllJobs = () => {
   const [{ user }, authdispatch] = useAuthStateValue();
   const [resjob, setresjob] = useState([]);
+  const [curentPage,setCurrentPage]=useState(1);
+  const [postPerPage,setPostPerPage]=useState(4);
   useEffect(() => {
     fetchAllJobs();
   }, [])
+  const lastPostIndex=curentPage*postPerPage;
+  const firstPostIndex=lastPostIndex-postPerPage;
+  const currentPost=resjob.slice(firstPostIndex,lastPostIndex);
+  
 
   const fetchAllJobs = async () => {
     try {
@@ -49,7 +56,8 @@ const AllJobs = () => {
         <h1>
           All Jobs
         </h1>
-        {resjob.map((j) => {
+        <Pagination totalPosts={resjob.length} postsPerPage={postPerPage} setCurrentPage={setCurrentPage} currentPage={curentPage} />
+        {currentPost.map((j) => {
           console.log(j);
           return <Job {...j}/>
         })}

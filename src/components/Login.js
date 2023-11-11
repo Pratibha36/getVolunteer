@@ -3,16 +3,20 @@ import './login.css';
 import CloseTwoToneIcon from '@mui/icons-material/CloseTwoTone';
 import { useStateValue } from './StatePovider';
 import { useAuthStateValue } from '../context/AuthStateProvider';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { TailSpin } from 'react-loader-spinner';
 
 const Login = () => {
 
   const [useremail, setUseremail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [{openloginmodal},dipatch]=useStateValue();
   const loginContainerRef = useRef(null);
   const [{user},dispatch]=useAuthStateValue();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const onClose=()=>{
     if(openloginmodal){
@@ -74,6 +78,7 @@ const Login = () => {
         const data = await response.json();
         dispatch({type:"LOGIN",payload:data})
         setLoading(false);
+        window.location.reload();
       } else {
         const errorData = await response.json();
         setError(errorData.error);
@@ -85,6 +90,13 @@ const Login = () => {
     }
 
   };
+  const handleSignup=()=>{
+    navigate("/signup")
+    dipatch({
+      type:"CLOSE_LOGIN_MODAL"
+    })
+
+  }
 
   return (
     <div className={`offcanvas-login ${openloginmodal    ? 'open' : ''} `}>
@@ -93,20 +105,33 @@ const Login = () => {
         <button className="close-button" onClick={onClose}>
         <CloseTwoToneIcon fontSize='large'/>
         </button>
-        <h2>Login</h2>
+        <h2 className="login-text">Login</h2>
+        <h3>Email ID</h3>
         <input
-          type="email"
-          placeholder="Email"
+          type="text"
+          placeholder="Email ID"
           value={useremail}
           onChange={(e) => setUseremail(e.target.value)}
         />
+        <h3>Password</h3>
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button onClick={handleLogin}>Login</button>
+         <button className="login-button" onClick={handleLogin} disabled={loading}>
+      {loading ? (
+        <div style={{display:"flex",justifyContent:"center"}}>
+        <TailSpin type="TailSpin" color="#ffffff" height={20} width={20} /></div>
+      ) : (
+        <span>Login</span>
+      )}
+    </button>
+        <div class="or-sec"> 
+        <span class="or-text">OR</span>
+         </div>
+        <button className="signup-button" onClick={handleSignup}>Sign Up</button>
       </div>
       </div>
     </div>

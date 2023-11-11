@@ -1,3 +1,5 @@
+import SignupLeft from './SignupLeft';
+import './signup.css';
 import React, { useEffect, useState } from 'react';
 import { useAuthStateValue } from '../context/AuthStateProvider';
 import { Navigate } from 'react-router-dom';
@@ -92,11 +94,14 @@ function Signup() {
   return (
     !user ?
     <div>
-
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit}>
+      <h2 className='register-text'>Register</h2>
+      <div className='signup-canvas'><div className='left-panel'>
+        <SignupLeft/>
+      </div>
+      <div className='right-panel'>
+        <form onSubmit={handleSubmit}>
         <label>
-          Select User Type:
+          <h3>Select User Type</h3>
           <select onChange={handleUserTypeChange} value={userType}>
             <option value="">-- Select User Type --</option>
             <option value="student">Student</option>
@@ -107,7 +112,7 @@ function Signup() {
         {userType === 'student' && (
           <div>
             <label>
-              Student Name:
+              Student Namex
               <input
                 type="text"
                 value={studentData.name}
@@ -115,7 +120,7 @@ function Signup() {
               />
             </label>
             <label>
-              Student Email:
+              Student Email
               <input
                 type="email"
                 value={studentData.email}
@@ -123,15 +128,7 @@ function Signup() {
               />
             </label>
             <label>
-              Password:
-              <input
-                type="password"
-                value={studentData.password}
-                onChange={(e) => handleInputChange(e, 'student', 'password')}
-              />
-            </label>
-            <label>
-              Phone Number:
+              Phone Number
               <input
                 type="text"
                 value={studentData.contact}
@@ -139,7 +136,7 @@ function Signup() {
               />
             </label>
             <label>
-              Roll Number:
+              Roll Number
               <input
                 type="text"
                 value={studentData.personId}
@@ -147,8 +144,8 @@ function Signup() {
               />
             </label>
             <label>
-              Gender:
-              <div>
+              Gender
+              <div className='radio-input'>
                 <label>
                   <input
                     type="radio"
@@ -170,7 +167,7 @@ function Signup() {
               </div>
             </label>
             <label>
-              Department:
+              Department
               <select
                 value={studentData.department}
                 onChange={(e) => handleInputChange(e, 'student', 'department')}
@@ -184,7 +181,7 @@ function Signup() {
               </select>
             </label>
             <label>
-              Program:
+              Program
               <select
                 value={studentData.program}
                 onChange={(e) => handleInputChange(e, 'student', 'program')}
@@ -195,7 +192,7 @@ function Signup() {
               </select>
             </label>
             <label>
-              Semester:
+              Semester
               <select
                 value={studentData.semester}
                 onChange={(e) => handleInputChange(e, 'student', 'semester')}
@@ -228,7 +225,7 @@ function Signup() {
         {userType === 'faculty' && (
           <div>
             <label>
-              Faculty Name:
+              Faculty Name
               <input
                 type="text"
                 value={facultyData.name}
@@ -236,7 +233,7 @@ function Signup() {
               />
             </label>
             <label>
-              Faculty Email:
+              Faculty Email
               <input
                 type="email"
                 value={facultyData.email}
@@ -244,15 +241,7 @@ function Signup() {
               />
             </label>
             <label>
-              Password:
-              <input
-                type="password"
-                value={facultyData.password}
-                onChange={(e) => handleInputChange(e, 'faculty', 'password')}
-              />
-            </label>
-            <label>
-              Phone Number:
+              Phone Number
               <input
                 type="text"
                 value={facultyData.contact}
@@ -260,7 +249,7 @@ function Signup() {
               />
             </label>
             <label>
-              Faculty ID:
+              Faculty ID
               <input
                 type="text"
                 value={facultyData.personId}
@@ -268,8 +257,8 @@ function Signup() {
               />
             </label>
             <label>
-              Gender:
-              <div>
+              Gender
+              <div className='radio-input'>
                 <label>
                   <input
                     type="radio"
@@ -291,7 +280,7 @@ function Signup() {
               </div>
             </label>
             <label>
-              Department:
+              Department
               <select
                 value={facultyData.department}
                 onChange={(e) => handleInputChange(e, 'faculty', 'department')}
@@ -305,7 +294,7 @@ function Signup() {
               </select>
             </label>
             <label>
-              Area of Interest:
+              Area of Interest
               <textarea
                 value={facultyData.areaOfInterest}
                 onChange={(e) => handleInputChange(e, 'faculty', 'areaOfInterest')}
@@ -314,9 +303,10 @@ function Signup() {
           </div>
         )}
 
-        <button type="submit">Submit</button>
-        {error && <div>{error}</div>}
+        <button className='submit-button' type="submit" disabled>Register now</button>
       </form>
+      </div>
+      </div>
     </div>
     : <Navigate to="/" replace={true} />
   );
