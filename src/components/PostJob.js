@@ -38,7 +38,7 @@ export const PostJob = () => {
     const job={
         heading:jobHeading,
         type:jobType,
-        description:`<div style="font-family:Arial, Helvetica, sans-serif">`+content+`</div>`,
+        description:content,
         keywords:keywords,
         startingDate:startDate,
         endingDate:endDate,

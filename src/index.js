@@ -17,6 +17,7 @@ import { AuthStateProvider, useAuthStateValue } from './context/AuthStateProvide
 import authReducer, { authInitialState } from './context/AuthReducer';
 import ViewJob from './components/ViewJob';
 import { PostJob } from './components/PostJob';
+import { JobListing } from './components/JobListing';
 
 const router = createBrowserRouter([
   {
@@ -38,7 +39,12 @@ const router = createBrowserRouter([
     },{
       path:"/postjob",
       element:<PostJob/>
-    }
+    },{path:"/appliedstudents",
+       element:<JobListing/>
+    },{path:"/approvedstudents",
+    element:<JobListing/>
+ }
+
     ]
   },
 ]);
