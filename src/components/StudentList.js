@@ -8,6 +8,7 @@ import { useState } from 'react';
 export const StudentList = () => {
   const location = useLocation();
   const [path, setpath] = useState();
+  const [selectedTab,setSelectedTab]=useState("applied")
  
   useEffect(() => {
     if (location.hash) {
@@ -21,9 +22,26 @@ export const StudentList = () => {
     }
   }, [location]);
 
+  const handleTabClick = (tab) => {
+    setSelectedTab(tab);
+    // Additional logic if needed when a tab is clicked
+  };
+
+
   return (
-    <div id={path==="selectedstudent"?"selectedstudent":"student"} className='studentlist'>
-         <h2 style={{color:"#013AA7",fontWeight:"bold"}}>#List of {path==="selectedstudent"?<span>Approved</span>:<span>Applied</span>} Students!</h2>  
+    <div id="student" className='studentlist'>
+         <h2 style={{color:"#013AA7",fontWeight:"bold"}}>#List of  Students!</h2>  
+         <div className='changestudenttab'>
+         <div onClick={() => handleTabClick('applied')} className={`tabone ${selectedTab === 'applied' ? 'selectedtab' : ''}`}>
+          Applied Students
+        </div>
+        <div onClick={() => handleTabClick('approved')} className={`tabone ${selectedTab === 'approved' ? 'selectedtab' : ''}`}>
+          Approved Students
+        </div>
+        <div onClick={() => handleTabClick('rejected')} className={`tabone ${selectedTab === 'rejected' ? 'selectedtab' : ''}`}>
+          Rejected Students
+        </div>
+        </div>
         <Student/>
         <Student/>
         <Student/>

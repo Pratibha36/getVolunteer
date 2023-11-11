@@ -41,8 +41,8 @@ const router = createBrowserRouter([
       element:<PostJob/>
     },{path:"/appliedstudents",
        element:<JobListing/>
-    },{path:"/approvedstudents",
-    element:<JobListing/>
+    },{path:"/appliedstudents/:jobid",
+    element:<ViewJob/>
  }
 
     ]

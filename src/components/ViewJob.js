@@ -106,54 +106,6 @@ const ViewJob = ({}) => {
     }
   };
 
-  //   return (
-  //     jobDetails && facultyDetails &&
-  //     <div className='viewjob'>
-  //       <div className='viewjob__items'>
-  //         <div className='viewjobcard'>
-  //           <div className='view_jobimgadj'>
-  //             <div>
-  //               <p className='viewjobcard__heading'>
-  //                 {jobDetails.heading}
-  //               </p>
-  //               <p className='viewjob__person'>{facultyDetails.name}</p>
-  //               <div className='viewjob__date'>
-  //                 <CalendarMonthTwoToneIcon />
-  //                 <p style={{ paddingRight: '90px' }}>Job Start date: {isoToDate(jobDetails.startingDate)}</p><pre />
-  //                 <CalendarTodayTwoToneIcon />
-  //                 <p >Job End date: {isoToDate(jobDetails.endingDate)}</p>
-  //               </div>
-  //               <div className='viewjob__date'>
-  //                 <DateRangeIcon />
-  //                 <p style={{ paddingRight: '30px' }}>Registration Start date: {isoToDate(jobDetails.registrationStartingDate)}</p>
-  //                 <CalendarTodayTwoToneIcon />
-  //                 <p>Registration End date: {isoToDate(jobDetails.registrationEndingDate)}</p>
-  //               </div>
-  //               <div className='viewjob_loc'>
-  //                 <LocationOnTwoToneIcon /> <p>{jobDetails.location}</p>
-  //               </div>
-  //             </div>
-  //             <img alt='job logo' src='https://img.naukimg.com/logo_images/groups/v1/6015371.gif' />
-  //           </div>
-  //           <hr />
-  //           <div className='viewjob__details'>
-  //             <p style={{ paddingRight: "10px" }}><span style={{ color: "rgb(101, 99, 99)" }}>Posted on:</span> {isoToDate(jobDetails.postDate)} </p>
-  //             <p style={{ paddingRight: "10px" }}><span style={{ color: "rgb(101, 99, 99)" }}>Openings:</span> 10</p>
-  //             <p style={{ paddingRight: "10px" }}><span style={{ color: "rgb(101, 99, 99)" }}>Applicants:</span> {jobDetails.applicant}</p>
-  //             <button className={applied ? "disabled" : "viewjob__button"} onClick={!applied ? applyToJob : null}>Apply Now</button>
-  //             {/* {!applied && <button className='viewjobwithdraw__button' onClick={applyToJob}>Withdraw Now</button>} */}
-
-  //           </div>
-  //         </div>
-  //         <div className='viewjobcard_desc'>
-  //           <p>{jobDetails.description}</p>
-  //           <div dangerouslySetInnerHTML={{ __html: htmlelem }} />
-  //         </div>
-  //       </div>
-  //     </div>
-  //   )
-  // }
-
   return (jobDetails && facultyDetails &&
     <div className='viewjob'>
     <div className='viewjob__items'>

@@ -96,7 +96,6 @@ const Header = ({ role, isAuthenticated, onLogout }) => {
       <li><Link className='header__li' to="/">Home</Link></li>
       <li><Link className='header__li' to={"/postjob"}>Post Jobs</Link></li>
       <li><Link className='header__li' to={"/appliedstudents"}>Applied Students</Link></li>
-      <li><Link className='header__li' to={"/approvedstudents"}>Approved Students</Link></li>
       <li onClick={logout}>Logout</li>
     </ul>
   );

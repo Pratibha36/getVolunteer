@@ -46,7 +46,7 @@ export const FacLists = (props) => {
   </div>)
 
   return (
-          <div><Link to={path=="appliedstudents"?`/viewjob/${props._id}/#student`:`/viewjob/${props._id}/#selectedstudent` } style={{ textDecoration: 'none' }}>{jobcard}</Link></div>
+          <div><Link to={`/appliedstudents/${props._id}/#student` } style={{ textDecoration: 'none' }}>{jobcard}</Link></div>
          )
     
 
