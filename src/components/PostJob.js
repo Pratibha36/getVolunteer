@@ -61,14 +61,14 @@ export const PostJob = () => {
         body: JSON.stringify(job),
         credentials: 'include'
       });
+      const responseData=await response.json();
       if(!response.ok) {
-        const errorData = await response.json();
-        console.log(errorData);
+        console.log(responseData);
         setLoading(true);
       }else{
         setLoading(false);
         toast("Congratulation!!!! You have posted your Job")
-        navigate('/viewjob'+1234)
+        navigate('/viewjob/'+responseData.jobId)
       }   
     }
 
