@@ -18,6 +18,7 @@ import authReducer, { authInitialState } from './context/AuthReducer';
 import ViewJob from './components/ViewJob';
 import { PostJob } from './components/PostJob';
 import { JobListing } from './components/JobListing';
+import Admin from './components/Admin';
 
 const router = createBrowserRouter([
   {
@@ -46,7 +47,10 @@ const router = createBrowserRouter([
  }
 
     ]
-  },
+  },{
+    path:"/admin",
+    element:<Admin/>
+  }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

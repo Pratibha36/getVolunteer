@@ -80,9 +80,11 @@ function Signup() {
         const errorData = await response.json();
         setError(errorData.error);
         setLoading(false);
+        console.log(errorData)
       }
     } catch (error) { 
       setError('An error occurred while processing your request.');
+      console.log(error)
       setLoading(false);
     }
   };

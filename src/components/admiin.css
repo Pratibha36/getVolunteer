@@ -1,0 +1,19 @@
+/* styles.css */
+
+/* Add some top margin to the menu */
+.menu {
+    margin-top: 50px; /* Adjust the value according to your design */
+}
+
+/* Style for the logo and website name */
+.logo {
+    width: 100px; /* Adjust the width as needed */
+    height: auto;
+}
+
+/* Additional styling for the website name */
+.website-name {
+    font-size: 24px; /* Adjust the font size as needed */
+    font-weight: bold;
+    color: #333; /* Adjust the color as needed */
+}
