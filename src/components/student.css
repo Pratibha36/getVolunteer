@@ -53,3 +53,8 @@
     cursor: not-allowed;
     background-color: gray;
   }
+  .student__details{
+    font-size: 18px;
+    font-weight: 500;
+    margin-left: 22px;
+  }

@@ -16,6 +16,8 @@ const Login = () => {
   const [{user},dispatch]=useAuthStateValue();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   const navigate = useNavigate();
 
   const onClose=()=>{
@@ -52,8 +54,19 @@ const Login = () => {
   }, [openloginmodal, onClose]);
 
   const handleLogin = async(e) => {
+    if (!useremail) {
+      setEmailError('Please enter your email.');
+    } else {
+      setEmailError('');
+    }
+    if (!password) {
+      setPasswordError('Please enter your password.');
+    } else {
+      setPasswordError('');
+    }
     e.preventDefault();
-    setLoading(true);
+    if (useremail && password) {
+      setLoading(true);
     setError(null);
 
     const user = {
@@ -81,6 +94,7 @@ const Login = () => {
         window.location.reload();
       } else {
         const errorData = await response.json();
+        console.log(errorData)
         setError(errorData.error);
         setLoading(false);
       }
@@ -89,6 +103,8 @@ const Login = () => {
       setLoading(false);
     }
 
+    }
+    
   };
   const handleSignup=()=>{
     navigate("/signup")

@@ -61,8 +61,8 @@ export const StudentList = ({ jobId }) => {
   };
 
 
-  return (
-    application && <div id="student" className='studentlist'>
+  return (<div  id="student">
+  {  application && <div  className='studentlist'>
       <h2 style={{ color: "#013AA7", fontWeight: "bold" }}>#List of  Students!</h2>
       <div className='changestudenttab'>
         <div onClick={() => handleTabClick('pending')} className={`tabone ${selectedTab === 'pending' ? 'selectedtab' : ''}`}>
@@ -84,6 +84,11 @@ export const StudentList = ({ jobId }) => {
             return <Student {...stud} getApplication={getApplication} />
 
           })}
+      {application &&
+  application
+    .filter((stud) => stud.status === selectedTab)
+    .length === 0 && <p>No students found for the selected tab.</p>}
+    </div>}
     </div>
   )
 }
