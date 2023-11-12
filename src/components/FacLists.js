@@ -10,7 +10,6 @@ import { useStateValue } from './StatePovider';
 import { Link, useLocation } from 'react-router-dom';
 import {isoToDate} from '../funtions/Function'
 import { useState,useEffect } from 'react';
-import parse from 'html-react-parser';
 
 
 export const FacLists = (props) => {
@@ -25,22 +24,33 @@ export const FacLists = (props) => {
     const lastPathSegment = pathname.split('/').pop();
     setpath(lastPathSegment) // Output: "appliedstudents"
   }, [location]);
+  let jobstatus; 
+  if(props.applicationStatus=="pending"){
+    jobstatus= <p style={{color:"#F05537",fontWeight:"bold"}}>PENDING FOR APPROVAL</p>
+  }else if(props.applicationStatus=="rejected"){
+    jobstatus= <p style={{color:"red",fontWeight:"bold"}}>APPLICATION REJECTED</p>
+  }else if(props.applicationStatus=="accepted"){
+    jobstatus= <p style={{color:"green",fontWeight:"bold"}}>APPLICATION APPROVED</p>
+  } else if(props.applicationStatus=="withdrawn"){
+    jobstatus= <p style={{color:"gray",fontWeight:"bold"}}>YOU HAVE WITHDRAWN</p>
+  }
 
   const jobcard = (<div className='jobs'>
     <div className='job__f'>
       <img src='https://img.naukimg.com/logo_images/groups/v1/6015371.gif' alt='noimage' />
       <h3>{props.heading}</h3>
     </div>
-    <div className='job__desc'>
-      {parse(props.description)}
-    </div>
-    <div className='job__date'>
+    <div className='job__date' style={{display:"flex",justifyContent:"space-between"}}>
       <p>Posted on: {isoToDate(props.postDate)}</p>
+      <div>
+        <p>{jobstatus}</p>
+      </div>
+    
     </div>
     <div className='job_loc'>
       <LocationOnTwoToneIcon /> <p>{props.location}</p>
-      <button style={{marginLeft:"400px",borderRadius:"25px", backgroundColor:"#f39b31", color:"white",fontWeight:"bold",
-    border:"1px solid #f39b31", height:"30px",textDecoration:"none",cursor:"pointer"}}>View Applied Student</button>
+      {user && user.userType==="faculty" && <button style={{marginLeft:"400px",borderRadius:"25px", backgroundColor:"#f39b31", color:"white",fontWeight:"bold",
+    border:"1px solid #f39b31", height:"30px",textDecoration:"none",cursor:"pointer"}}>View Applied Student</button>}
     </div>
 
   </div>)

@@ -5,13 +5,74 @@ import Login from './Login';
 import { useStateValue } from './StatePovider';
 import { useAuthStateValue } from '../context/AuthStateProvider';
 import { Link } from 'react-router-dom';
-const Header = ({ role, isAuthenticated, onLogout }) => {
+import { ToastContainer, toast } from 'react-toastify';
+import { includes } from 'lodash';
+import { display } from '@mui/system';
+const Header = () => {
   const [{openloginmodal},dipatch]=useStateValue();
   const [{user},authdispatch]=useAuthStateValue();
-  console.log(user)
   useEffect(()=>{
     fetchuser();
   },[])
+  useEffect(()=>{
+    if(user && user.userType==="student"){
+      checknotification();
+      const intervalId = setInterval(() => {
+        fetchuser();
+      }, 10000);
+
+      return () => clearInterval(intervalId);
+      
+    }
+  },[user])
+  const checknotification=async ()=>{
+    try {
+      const response = await fetch("http://localhost:8000/application_student",{credentials:"include"});
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json();
+      data.map((job)=>{
+        if(job.notification===true){
+          displayNotification(job.notificationValue)
+          setnotificationfalse(job.applicationId);
+        }
+      })  
+    } catch (error) {
+      console.error('Error fetching data:', error.message);
+    }
+
+  };
+  const setnotificationfalse=async(applicationId)=>{
+    try {
+      console.log(applicationId)
+      const response = await fetch("http://localhost:8000/application/"+applicationId, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          notification:false,
+          notificationValue:""
+        }),
+        credentials: "include",
+      });
+      // console.log(response)
+      const responseData = await response.json();
+      if (response.ok) {
+        console.log(responseData)
+      } else {
+        // const errorData = await response.json();
+        console.log(responseData.message);
+      }
+    } catch (error) {
+      // console.log(error)
+    }
+
+  }
+  const displayNotification=(msg)=>{
+    toast(msg)
+  }
   const fetchuser=async ()=>{
     try {
       // Define the URL of the API you want to make a GET request to
@@ -103,7 +164,7 @@ const Header = ({ role, isAuthenticated, onLogout }) => {
     <ul  className='header__nav'>
       <li><Link className='header__li' to="/">Home</Link></li>
       <li>Notification</li>
-      <li><Link className='header__li' to={"/"}>Applied Jobs</Link></li>
+      <li><Link className='header__li' to={"/appliedstudents"}>Applied Jobs</Link></li>
       <li onClick={logout}>Logout</li>
     </ul>
   );
@@ -117,6 +178,7 @@ const Header = ({ role, isAuthenticated, onLogout }) => {
   }
   return (
     <div>
+      <ToastContainer />
       <div className="header">
         <div className='header__icons'>
         <img className='header__logo' src={nitclogo} alt='nitclogo'/>

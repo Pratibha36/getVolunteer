@@ -69,7 +69,8 @@
     margin-left: auto;
     cursor: pointer;
 }
-.disabled {
+.viewjobwithdraw__button{
+    background-color: #c94a36;
     color: white;
     font-weight: bold;
     border: none;
@@ -77,7 +78,19 @@
     border-radius: 15px;
     padding: 10px;
     margin-left: auto;
+    cursor: pointer;
+}
+.dis {
+    background-color: grey;
+    color: white;
+    font-weight: bold;
+    border: none;
+    width: 100px;
+    border-radius: 15px;
+    padding: 10px;
+    border-radius: 15px;
+    margin-left: auto;
     opacity: 0.6;
     cursor: not-allowed;
-    background-color: gray;
+    
   }
