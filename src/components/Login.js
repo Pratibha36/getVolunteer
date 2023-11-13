@@ -5,21 +5,26 @@ import { useStateValue } from './StatePovider';
 import { useAuthStateValue } from '../context/AuthStateProvider';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { TailSpin } from 'react-loader-spinner';
+import Error from './Error';
+// import { useStateValue } from './StatePovider';
 
 const Login = () => {
 
   const [useremail, setUseremail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [{openloginmodal},dipatch]=useStateValue();
+  // const [{openloginmodal},dipatch]=useStateValue();
   const loginContainerRef = useRef(null);
   const [{user},dispatch]=useAuthStateValue();
+  const [{ openloginmodal, iserror, errorMessage }, dipatch] = useStateValue();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const navigate = useNavigate();
 
+
+  
   const onClose=()=>{
     if(openloginmodal){
         dipatch({
@@ -41,7 +46,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-
+    // if (user) navigate('/');
     if (openloginmodal) {
       document.addEventListener('mousedown', handleOutsideClick);
     } else {
@@ -51,22 +56,11 @@ const Login = () => {
     return () => {
       document.removeEventListener('mousedown', handleOutsideClick);
     };
-  }, [openloginmodal, onClose]);
+  }, [openloginmodal, onClose,user]);
 
   const handleLogin = async(e) => {
-    if (!useremail) {
-      setEmailError('Please enter your email.');
-    } else {
-      setEmailError('');
-    }
-    if (!password) {
-      setPasswordError('Please enter your password.');
-    } else {
-      setPasswordError('');
-    }
     e.preventDefault();
-    if (useremail && password) {
-      setLoading(true);
+    setLoading(true);
     setError(null);
 
     const user = {
@@ -85,25 +79,41 @@ const Login = () => {
         body: JSON.stringify(user),
         credentials: 'include'
       });
-
+      const responseData=await response.json();
       if (response.ok) {
-        console.log(response)
-        const data = await response.json();
-        dispatch({type:"LOGIN",payload:data})
+        // console.log(response)
+        // const data = await response.json();
+        dispatch({type:"LOGIN",payload:responseData})
         setLoading(false);
         window.location.reload();
       } else {
-        const errorData = await response.json();
-        console.log(errorData)
-        setError(errorData.error);
+        // const errorData = await response.json();
+        console.log(responseData)
+        if(response.status==400){
+        dipatch({
+          type: "SHOW_ERROR",
+          payload: responseData
+        })}
+        else{
+          dipatch({
+            type: "SHOW_ERROR",
+            payload: responseData
+          })
+        }
+        
+        // setError(responseData);
         setLoading(false);
       }
     } catch (error) {
-      setError('An error occurred while processing your request.');
+      dipatch({
+        type: "SHOW_ERROR",
+        payload: {'error':`Error in signin: ${error.message}`}
+      })
+      // setError(error);
       setLoading(false);
     }
 
-    }
+    
     
   };
   const handleSignup=()=>{
@@ -113,9 +123,13 @@ const Login = () => {
     })
 
   }
+  const handleClose=()=>{
+    setError(null)
+  }
 
   return (
-    <div className={`offcanvas-login ${openloginmodal    ? 'open' : ''} `}>
+    <div className={`offcanvas-login ${openloginmodal? 'open' : ''}  ${iserror ? 'blur' : ''}`}>
+      {/* {error && <Error {...error} handleClose={handleClose}/>} */}
         <div className='overlay'>
       <div className="offcanvas-content" ref={loginContainerRef}>
         <button className="close-button" onClick={onClose}>
@@ -128,6 +142,7 @@ const Login = () => {
           placeholder="Email ID"
           value={useremail}
           onChange={(e) => setUseremail(e.target.value)}
+          required
         />
         <h3>Password</h3>
         <input
@@ -135,6 +150,7 @@ const Login = () => {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
          <button className="login-button" onClick={handleLogin} disabled={loading}>
       {loading ? (

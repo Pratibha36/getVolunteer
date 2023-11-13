@@ -1,3 +1,7 @@
+.blur{
+  filter: blur(3px);
+  /* opacity: .6; */
+}
 .register-text{
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;

@@ -7,9 +7,11 @@ import slide3 from '../assets/slide3.jpeg'
 import slide4 from '../assets/slide4.jpg'
 import slide5 from '../assets/slide5.jpeg'
 import SimpleImageSlider from "react-simple-image-slider";
+import { useStateValue } from './StatePovider';
 
 
 const Introcontent = () => {
+    const [{ openloginmodal, iserror, errorMessage }, dipatch] = useStateValue();
     const images = [
         { url: slide1 },
         { url: slide2 },
@@ -18,7 +20,7 @@ const Introcontent = () => {
         {url:slide5},
       ];
   return (
-    <div style={{ backgroundImage: `url(${bg})`,
+    <div className={iserror?"blur":""}style={{ backgroundImage: `url(${bg})`,
         marginTop:"-25px",
         height:"500px",
         backgroundSize: 'cover',

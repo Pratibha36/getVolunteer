@@ -1,3 +1,7 @@
+.blur{
+    filter: blur(3px);
+}
+
 .alljobs{
     margin-top: 100px;
     display: flex;
