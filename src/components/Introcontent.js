@@ -43,9 +43,9 @@ const Introcontent = () => {
             </div>
             </div>
             <div className='intro_box'>
-                <h3 classNane="content1">quer</h3>
-                <h3 classNane="content2">abbckas</h3>
-                <h3 classNane="content3 ">ghavs</h3>   
+                <h3 classNane="content1"><span style={{color:"green", fontWeight:"bold", marginRight :"10px"}}>100+</span>Jobs</h3>
+                <h3 classNane="content2"><span style={{color:"green", fontWeight:"bold", marginRight :"10px"}}>500+</span>Students</h3>
+                <h3 classNane="content3 "><span style={{color:"green", fontWeight:"bold", marginRight :"10px"}}>100+</span>Faculties</h3>   
             </div>
     </div>
   )

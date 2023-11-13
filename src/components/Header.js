@@ -4,13 +4,14 @@ import './header.css'
 import Login from './Login';
 import { useStateValue } from './StatePovider';
 import { useAuthStateValue } from '../context/AuthStateProvider';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { includes } from 'lodash';
 import { display } from '@mui/system';
 const Header = () => {
   const [{openloginmodal},dipatch]=useStateValue();
   const [{user},authdispatch]=useAuthStateValue();
+  const navigate=useNavigate()
   useEffect(()=>{
     fetchuser();
   },[])
@@ -18,12 +19,15 @@ const Header = () => {
     if(user && user.userType==="student"){
       checknotification();
       const intervalId = setInterval(() => {
-        fetchuser();
+        checknotification();
       }, 10000);
 
       return () => clearInterval(intervalId);
       
     }
+    if (user && user.userType === "admin") {
+      navigate("/admin");
+  }
   },[user])
   const checknotification=async ()=>{
     try {
@@ -94,9 +98,14 @@ const Header = () => {
         authdispatch({
           type:"LOGIN",
           payload:responseData
-        })
+        })  
+        console.log(user," is the user")
+        if(user.userType ==="admin"){
+          navigate("/admin")
+        }
         
       }
+
      
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -147,7 +156,7 @@ const Header = () => {
   const userLinks = (
     <ul  className='header__nav'>
     <li><Link className='header__li' to="/">Home</Link></li>
-    <li><Link className='header__li' to="/">Jobs</Link></li>
+    <li><a className='header__li' href='#job'>Jobs</a></li>
     <l1 onClick={toggleLogin}>Login</l1>
     <Login/>
   </ul>

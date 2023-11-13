@@ -55,6 +55,7 @@ function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     setLoading(true);
     setError(null);
 
@@ -112,7 +113,7 @@ function Signup() {
         {userType === 'student' && (
           <div>
             <label>
-              Student Namex
+              Student Name
               <input
                 type="text"
                 value={studentData.name}
@@ -133,6 +134,14 @@ function Signup() {
                 type="text"
                 value={studentData.contact}
                 onChange={(e) => handleInputChange(e, 'student', 'contact')}
+              />
+            </label>
+            <label>
+              Password
+              <input
+                type="password"
+                value={studentData.password}
+                onChange={(e) => handleInputChange(e, 'student', 'password')}
               />
             </label>
             <label>
@@ -249,6 +258,14 @@ function Signup() {
               />
             </label>
             <label>
+              Password
+              <input
+                type="password"
+                value={facultyData.password}
+                onChange={(e) => handleInputChange(e, 'faculty', 'password')}
+              />
+            </label>
+            <label>
               Faculty ID
               <input
                 type="text"
@@ -303,7 +320,7 @@ function Signup() {
           </div>
         )}
 
-        <button className='submit-button' type="submit" disabled>Register now</button>
+        <button className='submit-button' type="submit" >Register now</button>
       </form>
       </div>
       </div>

@@ -36,5 +36,9 @@
     margin-left: 20px;
     padding: left;
     flex-direction: row;
-    color:blueviolet;
+    color:black;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.content1{
+    color: black;
 }

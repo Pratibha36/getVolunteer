@@ -19,7 +19,7 @@ const AllJobs = () => {
   const lastPostIndex=curentPage*postPerPage;
   const firstPostIndex=lastPostIndex-postPerPage;
   const currentPost=resjob.slice(firstPostIndex,lastPostIndex);
-  
+ 
 
   const fetchAllJobs = async () => {
     try {
@@ -46,7 +46,7 @@ const AllJobs = () => {
 
   return (
     user && user.userType === "faculty" ? (
-      <div>
+      <div id='jobs'>
         
         <div className='myjobs'>
           <h1>
@@ -68,7 +68,7 @@ const AllJobs = () => {
             )}
         </div>
       </div>) :
-      (<div className='alljobs' >
+      (<div  className='alljobs' >
         <h1>
           All Jobs
         </h1>
