@@ -8,34 +8,51 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { isoToDate } from "../funtions/Function";
 import { useParams } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import { useStateValue } from './StatePovider';
 
 import { StudentList } from "./StudentList";
 import { useAuthStateValue } from "../context/AuthStateProvider";
 
 const ViewJob = ({ }) => {
+  const navigate = useNavigate();
   const htmlelem = "<h1>hi<h1>";
   const [{ user }, authdispatch] = useAuthStateValue();
+  const [{ openloginmodal, iserror, errorMessage }, dipatch] = useStateValue();
   const [jobDetails, setJobDetails] = useState(null);
   const [facultyDetails, setFacultyDetails] = useState(null);
   // const [applied, setApplied] = useState(false);
   const [application, setApplication] = useState(null);
   const { jobid } = useParams();
   useEffect(() => {
+    // if (!user) navigate('/');
     fetchJobWithId();
     checkApplied();
-  }, []);
+  }, [user]);
+  console.log(jobid)
 
   const fetchFacultyDetails = async (facultyId) => {
-    const response = await fetch("http://localhost:8000/user/" + facultyId, {
-      method: "GET",
-      credentials: "include",
-    });
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
+    try {
+      const response = await fetch("http://localhost:8000/user/" + facultyId, {
+        method: "GET",
+        credentials: "include",
+      });
+      const responseData = await response.json();
+      if (!response.ok) {
+        dipatch({
+          type: "SHOW_ERROR",
+          payload: responseData
+        })
+      }
+      else {
+        setFacultyDetails(responseData);
+      }
     }
-    const responseData = await response.json();
-    if (response.ok) {
-      setFacultyDetails(responseData);
+    catch (error) {
+      dipatch({
+        type: "SHOW_ERROR",
+        payload: { 'error': `Error fetching faculty data: ${error.message}` }
+      })
     }
   };
   const checkApplied = async () => {
@@ -50,17 +67,24 @@ const ViewJob = ({ }) => {
           credentials: "include",
         }
       );
-      const responseData=await response.json()
+      const responseData = await response.json()
       if (response.ok) {
         console.log(responseData);
-        if(responseData.success){
+        if (responseData.success) {
           setApplication(responseData.application)
         }
-      } else {
-        // console.log(errorData)
+      }
+      else {
+        dipatch({
+          type: "SHOW_ERROR",
+          payload: responseData
+        })
       }
     } catch (error) {
-      // console.log(error)
+      dipatch({
+        type: "SHOW_ERROR",
+        payload: { 'error': `Error fetching chekck appliec data: ${error.message}` }
+      })
     }
   };
   const onApply = async () => {
@@ -76,22 +100,27 @@ const ViewJob = ({ }) => {
         credentials: "include",
       });
       // console.log(response)
+      const responseData = await response.json();
       if (response.ok) {
-        const data = await response.json();
         checkApplied();
         fetchJobWithId();
       } else {
-        const errorData = await response.json();
-        window.alert(errorData.message);
+        dipatch({
+          type: "SHOW_ERROR",
+          payload: responseData
+        })
       }
     } catch (error) {
-      // console.log(error)
+      dipatch({
+        type: "SHOW_ERROR",
+        payload: { 'error': `Error applying job: ${error.message}` }
+      })
     }
   };
 
-  const onWithdraw=async()=>{
+  const onWithdraw = async () => {
     try {
-      const response = await fetch("http://localhost:8000/application/"+application._id, {
+      const response = await fetch("http://localhost:8000/application/" + application._id, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -107,36 +136,53 @@ const ViewJob = ({ }) => {
         console.log(responseData)
         checkApplied();
         fetchJobWithId();
-      } else {
+      }
+      else {
         // const errorData = await response.json();
-        window.alert(responseData.message);
+        // window.alert(responseData);
+        dipatch({
+          type: "SHOW_ERROR",
+          payload: responseData
+        })
       }
     } catch (error) {
-      console.log(error)
+      dipatch({
+        type: "SHOW_ERROR",
+        payload: { 'error': `Error in withdraw data: ${error.message}` }
+      })
     }
   }
 
 
   const fetchJobWithId = async () => {
     try {
-      const apiUrl = "http://localhost:8000/job/" + jobid; // Replace with your API URL
-      // Use the fetch API with async/await
+      const apiUrl = "http://localhost:8000/job/" + jobid; 
       const response = await fetch(apiUrl, {
+        method: "GET",
         credentials: "include",
       });
+      const responseData = await response.json()
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        dipatch({
+          type: "SHOW_ERROR",
+          payload: responseData
+        })
       }
-      const responseData = await response.json();
-      setJobDetails(responseData);
-      fetchFacultyDetails(responseData.facultyId);
+      else {
+        setJobDetails(responseData);
+        fetchFacultyDetails(responseData.facultyId);
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
+      dipatch({
+        type: "SHOW_ERROR",
+        payload: {'error':`Error fetching job data: ${error.message}`}
+      })
     }
   };
 
   return (jobDetails && facultyDetails &&
-    <div className='viewjob'>
+    <div className={`{viewjob ${iserror ? 'blur' : ''}`}>
       <div className='viewjob__items'>
         <div className='viewjobcard'>
           <div className='view_jobimgadj'>
@@ -168,20 +214,19 @@ const ViewJob = ({ }) => {
             <p style={{ paddingRight: "10px" }}><span style={{ color: "rgb(101, 99, 99)" }}>Posted on:</span> {isoToDate(jobDetails.postDate)} </p>
             <p style={{ paddingRight: "10px" }}><span style={{ color: "rgb(101, 99, 99)" }}>Openings:</span> 10</p>
             <p style={{ paddingRight: "10px" }}><span style={{ color: "rgb(101, 99, 99)" }}>Applicants:</span> {jobDetails.applicant}</p>
-            {user.userType === "student" && !application && <button className="viewjob__button" onClick={()=>onApply()}>Apply Now</button>}
-            {user.userType === "student" && application && application.status!=="withdrawn" && <button className="viewjobwithdraw__button" onClick={()=>onWithdraw()}>Withdraw</button>}
-            {user.userType === "student" && application && application.status==="withdrawn" && <button className="dis" onClick={null}>Withdraw</button>}
+            {user.userType === "student" && !application && <button className="viewjob__button" onClick={() => onApply()}>Apply Now</button>}
+            {user.userType === "student" && application && (["pending", "accepted"].includes(application.status)) && <button className="viewjobwithdraw__button" onClick={() => onWithdraw()}>Withdraw</button>}
+            {user.userType === "student" && application && (["withdrawn", "rejected"].includes(application.status)) && <button className="dis" onClick={null}>Withdraw</button>}
           </div>
         </div>
         <div className='viewjobcard_desc'>
           <div dangerouslySetInnerHTML={{ __html: jobDetails.description }} />
         </div>
       </div>
-      {user.userType==="faculty" && <div>
+      {user.userType === "faculty" && <div>
         <StudentList jobId={jobid} />
       </div>}
     </div>
-
   )
     ;
 };

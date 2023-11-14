@@ -25,13 +25,13 @@ export const FacLists = (props) => {
     setpath(lastPathSegment) // Output: "appliedstudents"
   }, [location]);
   let jobstatus; 
-  if(props.applicationStatus=="pending"){
+  if(props.applicationStatus==="pending"){
     jobstatus= <p style={{color:"#F05537",fontWeight:"bold"}}>PENDING FOR APPROVAL</p>
-  }else if(props.applicationStatus=="rejected"){
+  }else if(props.applicationStatus==="rejected"){
     jobstatus= <p style={{color:"red",fontWeight:"bold"}}>APPLICATION REJECTED</p>
-  }else if(props.applicationStatus=="accepted"){
+  }else if(props.applicationStatus==="accepted"){
     jobstatus= <p style={{color:"green",fontWeight:"bold"}}>APPLICATION APPROVED</p>
-  } else if(props.applicationStatus=="withdrawn"){
+  } else if(props.applicationStatus==="withdrawn"){
     jobstatus= <p style={{color:"gray",fontWeight:"bold"}}>YOU HAVE WITHDRAWN</p>
   }
 

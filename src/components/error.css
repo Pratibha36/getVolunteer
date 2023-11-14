@@ -1,53 +1,56 @@
-.box{
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #ccc;
-    text-align: center;
-    top: 50%;
-    left: 50%;
-    border: var(--borderCheck);
-    z-index: 99 !important;
-    border-radius: 10px;
-}
+    .box{
+        color: black;
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        text-align: center;;
+        top: 50%;
+        left: 50%;
+        /* border: var(--borderCheck); */
+        border: 2px solid black;
+        z-index: 1099 !important;
+        border-radius: 10px;
+    }
 
-.heading{
-    /* width: 76px; */
-    margin-top: 10px;
-    text-align: center;
-    padding: 3px 0px;
-    font-size: 18px;
-    align-self: center;
-    color: red;
-    /* background-color: black; */
-    border-radius: 7px;
-    /* border: var(--borderCheck); */
-}
+    .heading{
+        /* width: 76px; */
+        margin-top: 10px;
+        text-align: center;
+        padding: 3px 0px;
+        font-size: 18px;
+        font-weight: bold;
+        align-self: center;
+        color:  blue;
+        /* background-color: black; */
+        border-radius: 7px;
+        /* border: var(--borderCheck); */
+    }
 
-.messageBox{
-    margin: 5px;
-    padding: 7px;
-}
+    .messageBox{
+        margin: 5px;
+        padding: 7px;
+    }
 
-.closeButton{
-    width: 76px;
-    margin: 7px;
-    text-align: center;
-    padding: 3px 0px;
-    font-size: 18px;
-    align-self: center;
-    /* color: white; */
-    /* background-color: var(--bodyBgColor); */
-    border-radius: 7px;
-    border: var(--borderCheck);
-}
+    .closeButton{
+        margin: 7px;
+        text-align: center;
+        padding: 3px 0px;
+        font-size: 18px;
+        align-self: center;
+        /* color: white; */
+        /* background-color: var(--bodyBgColor); */
+        border-radius: 7px;
+        /* border: solid 2px black; */
+        width: 120px; /* Adjust the width as needed */
+       }
 
-.closeButton:hover{
-    background-color:var(--navBgColor);
-    color: white;
-    cursor: pointer;
-    border-radius:7px ;
-}
+    .closeButton:hover{
+        background-color:var(--navBgColor);
+        color: rgb(230, 22, 22);
+        cursor: pointer;
+        border-radius:7px ;
+    }

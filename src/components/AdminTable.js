@@ -1,10 +1,73 @@
 import React from 'react';
 import './AdminTable.css'; // Import the CSS file
 
-const AdminTable = ({ users,userData }) => {
-  const onDeleteUser = (userId) => {
-    // Add your delete logic here
+const AdminTable = ({ users,userData,getAllJobs,getAllUser }) => {
+  const onDeleteUser =async (userId) => {
+    try {
+      console.log(userId," is the user")
+      const response = await fetch("http://localhost:8000/user/" + userId, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      // console.log(response)
+      const responseData = await response.json();
+      if (response.ok) {
+        console.log(responseData)
+        getAllUser();
+        getAllJobs();
+      } else {
+        // const errorData = await response.json();
+        // dipatch({
+        //   type: "SHOW_ERROR",
+        //   payload: responseData
+        // })
+        console.log(responseData);
+      }
+    } catch (error) {
+      console.log(error)
+      // dipatch({
+      //   type: "SHOW_ERROR",
+      //   payload: {'error':`Error fetching data: ${error.message}`}
+      // })
+    }
   };
+
+  const onBlockJob =async (jobId,newStatus) => {
+    try {
+      console.log(jobId,newStatus)
+      const response = await fetch("http://localhost:8000/job/" + jobId, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      // console.log(response).
+      const responseData = await response.json();
+      if (response.ok) {
+        getAllJobs()
+        console.log(responseData)
+      } else {
+        // const errorData = await response.json();
+        // dipatch({
+        //   type: "SHOW_ERROR",
+        //   payload: responseData
+        // })
+        console.log(responseData);
+      }
+    } catch (error) {
+      console.log(error)
+      // dipatch({
+      //   type: "SHOW_ERROR",
+      //   payload: {'error':`Error fetching data: ${error.message}`}
+      // })
+    }
+  };
+
+
   const formatDate = (DateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZoneName: 'short' };
     const startDate = new Date(DateString);
@@ -36,7 +99,7 @@ const AdminTable = ({ users,userData }) => {
           <td>{user.gender}</td>
           <td>{user.department}</td>
           <td>
-            <button className='admin_btn' onClick={() => onDeleteUser(user.userId)}>
+            <button className='admin_btn' onClick={() => onDeleteUser(user._id)}>
               Delete
             </button>
           </td>
@@ -73,7 +136,7 @@ const AdminTable = ({ users,userData }) => {
           <td>{user.semester}</td>
           <td>{user.program}</td>
           <td>
-            <button className='admin_btn' onClick={() => onDeleteUser(user.userId)}>
+            <button className='admin_btn' onClick={() => onDeleteUser(user._id)}>
               Delete
             </button>
           </td>
@@ -111,9 +174,12 @@ const AdminTable = ({ users,userData }) => {
           <td>{formatDate(user.postDate)}</td>
           <td>{user.status}</td>
           <td>
-            <button className='admin_btn' style={{backgroundColor:"blue"}} onClick={() => onDeleteUser(user.userId)}>
+            {user.status==="active" && <button className='admin_btn' style={{backgroundColor:"blue"}} onClick={() => onBlockJob(user._id,"inactive")}>
               block Job
-            </button>
+            </button>}
+            {user.status==="inactive" && <button className='admin_btn' style={{backgroundColor:"blue"}} onClick={() => onBlockJob(user._id,"active")}>
+              unblock Job
+            </button>}
           </td>
         </tr>
       ))}

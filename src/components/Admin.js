@@ -80,11 +80,11 @@ const Admin = () => {
   const renderContent = () => {
     switch (activeKey) {
       case '1':
-        return <AdminTable users={studuser} userData={"student"} />;
+        return <AdminTable users={studuser} userData={"student"} getAllJobs={getAllJobs} getAllUser={getAllUser} />;
       case '2':
-        return <AdminTable users={facuser} userData={"faculty"} />;
+        return <AdminTable users={facuser} userData={"faculty"} getAllJobs={getAllJobs} getAllUser={getAllUser}  />;
       case '3':
-        return <AdminTable users={jobs} userData={"job"}   />;
+        return <AdminTable users={jobs} userData={"job"} getAllJobs={getAllJobs} getAllUser={getAllUser} />;
       case '4':
         break;
       default:
@@ -99,7 +99,6 @@ const Admin = () => {
         credentials: 'include'
       });
       const responseData = await response.json();
-      console.log(responseData)
       const studfilter=responseData.filter(user => user.userType ==="student");
       const facfilter=responseData.filter(user => user.userType ==="faculty");
       if (!response.ok) {
@@ -107,6 +106,7 @@ const Admin = () => {
       }
       setstuduser(studfilter)
       setfacuser(facfilter)
+      
   }
   const getAllJobs=async()=>{
     const apiUrl = 'http://localhost:8000/job';
@@ -121,7 +121,6 @@ const Admin = () => {
       }
       setJobs(responseData);
   }
-  if(studuser.length===0 ||  jobs.length===0)return null
   
 
   return ((user && user.userType==="admin" &&<div>

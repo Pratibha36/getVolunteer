@@ -4,6 +4,7 @@ import './studentlist.css'
 import { useLocation, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { useStateValue } from './StatePovider';
 
 export const StudentList = ({ jobId }) => {
   const location = useLocation();
@@ -11,6 +12,7 @@ export const StudentList = ({ jobId }) => {
   const [selectedTab, setSelectedTab] = useState("pending")
   const [application, setApplication] = useState(null)
   const [ref, setRef] = useState(0)
+  const [{ openloginmodal, iserror, errorMessage }, dipatch] = useStateValue();
 
 
   useEffect(() => {
@@ -39,17 +41,21 @@ export const StudentList = ({ jobId }) => {
           credentials: "include",
         }
       );
-
+      const responseData = await response.json();
       if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-        setApplication(data);
+        console.log(responseData);
+        setApplication(responseData);
       } else {
-        const errorData = await response.json();
-        // console.log(errorData)
+        dipatch({
+          type: "SHOW_ERROR",
+          payload: responseData
+        })
       }
     } catch (error) {
-      // console.log(error)
+      dipatch({
+        type: "SHOW_ERROR",
+        payload: { 'error': `Error fetching data: ${error.message}` }
+      })
     }
   };
 
@@ -61,8 +67,8 @@ export const StudentList = ({ jobId }) => {
   };
 
 
-  return (<div  id="student">
-  {  application && <div  className='studentlist'>
+  return (<div id="student">
+    {application && <div className='studentlist'>
       <h2 style={{ color: "#013AA7", fontWeight: "bold" }}>#List of  Students!</h2>
       <div className='changestudenttab'>
         <div onClick={() => handleTabClick('pending')} className={`tabone ${selectedTab === 'pending' ? 'selectedtab' : ''}`}>
@@ -85,10 +91,10 @@ export const StudentList = ({ jobId }) => {
 
           })}
       {application &&
-  application
-    .filter((stud) => stud.status === selectedTab)
-    .length === 0 && <p>No students found for the selected tab.</p>}
+        application
+          .filter((stud) => stud.status === selectedTab)
+          .length === 0 && <p>No students found for the selected tab.</p>}
     </div>}
-    </div>
+  </div>
   )
 }

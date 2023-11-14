@@ -1,4 +1,8 @@
 
+.blur{
+    filter: blur(3px);
+    pointer-events: none;
+}
 .header{
     display: flex;
     background-color: #013AA7;

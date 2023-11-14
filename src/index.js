@@ -19,8 +19,10 @@ import ViewJob from './components/ViewJob';
 import { PostJob } from './components/PostJob';
 import { JobListing } from './components/JobListing';
 import Admin from './components/Admin';
+import { Navigate } from 'react-router-dom';
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
   {
     path: "/",
     element: <App/>,
@@ -47,12 +49,15 @@ const router = createBrowserRouter([
     },{
       path:"/appliedjobs",
       element:<ViewJob/>
+    // }
     }
-
     ]
   },{
     path:"/admin",
     element:<Admin/>
+  },{
+    path:"/*",
+    element:<Navigate to="/" />
   }
 ]);
 
