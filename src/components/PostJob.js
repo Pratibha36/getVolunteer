@@ -43,11 +43,11 @@ export const PostJob = () => {
 
   useEffect(() => {
     console.log(user)
-    if (user === null || user === undefined) {
-      navigate('/');
-    } else if (user.userType === "faculty") {
-      navigate("/postjob")
-    }
+    // if (user === null || user === undefined) {
+    //   navigate('/');
+    // } else if (user.userType === "faculty") {
+    //   navigate("/postjob")
+    // }
   }, [user])
 
 

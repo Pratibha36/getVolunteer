@@ -89,6 +89,9 @@ const Login = () => {
       } else {
         // const errorData = await response.json();
         console.log(responseData)
+        dipatch({
+          type:"CLOSE_LOGIN_MODAL"
+        })
         if(response.status==400){
         dipatch({
           type: "SHOW_ERROR",

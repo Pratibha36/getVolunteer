@@ -21,7 +21,7 @@ const AllJobs = () => {
   const lastPostIndex=curentPage*postPerPage;
   const firstPostIndex=lastPostIndex-postPerPage;
   const currentPost=resjob.slice(firstPostIndex,lastPostIndex);
-  
+ 
 
   const fetchAllJobs = async () => {
     try {

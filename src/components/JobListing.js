@@ -29,7 +29,7 @@ export const JobListing = () => {
 
     const fetchAllJobs = async () => {
         try {
-          const apiUrl = (user.userType==="student")?'http://localhost:8000/application_student':'http://localhost:8000/job'; // Replace with your API URL
+          const apiUrl = (user && user.userType==="student")?'http://localhost:8000/application_student':'http://localhost:8000/job'; // Replace with your API URL
           // Use the fetch API with async/await
           const response = await fetch(apiUrl, {
             method: "GET",
@@ -58,7 +58,7 @@ export const JobListing = () => {
       }
     
   return (
-    user?<div className={iserror && "blur"}>
+    (user && currentPost)?<div className={iserror && "blur"}>
         <div className='myjobs'>
         <Pagination totalPosts={resjob.length} postsPerPage={postPerPage} setCurrentPage={setCurrentPage} currentPage={curentPage} />
         <h2 style={{color:"#013AA7",}}>My Jobs!</h2>

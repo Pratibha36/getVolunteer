@@ -4,14 +4,13 @@ import './header.css'
 import Login from './Login';
 import { useStateValue } from './StatePovider';
 import { useAuthStateValue } from '../context/AuthStateProvider';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useNavigation } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { includes } from 'lodash';
 import { display } from '@mui/system';
-import { useNavigate } from 'react-router-dom';
 import Error from './Error';
 const Header = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const [{ openloginmodal, iserror, errorMessage }, dipatch] = useStateValue();
   const [{ user }, authdispatch] = useAuthStateValue();
   useEffect(() => {
@@ -21,14 +20,17 @@ const Header = () => {
     if (user && user.userType === "student") {
       checknotification();
       const intervalId = setInterval(() => {
-        fetchuser();
+        checknotification();
       }, 10000);
 
       return () => clearInterval(intervalId);
 
     }
-  }, [user])
-  const checknotification = async () => {
+    if (user && user.userType === "admin") {
+      navigate("/admin");
+  }
+  },[user]) 
+  const checknotification=async ()=>{
     try {
       const response = await fetch("http://localhost:8000/application_student", { credentials: "include" });
       const responseData = await response.json();
@@ -112,12 +114,15 @@ const Header = () => {
       if (response.ok) {
         if (responseData.success === "successfully logout") navigate('/signin');
         authdispatch({
-          type: "LOGIN",
-          payload: responseData
-        })
-
+          type:"LOGIN",
+          payload:responseData
+        })  
+        console.log(user," is the user")
+        
+       
       }
 
+     
     } catch (error) {
       // dipatch({
       //   type: "SHOW_ERROR",
@@ -214,10 +219,10 @@ const Header = () => {
     })
   }
   return (
-    <div>
+    <div >
       <ToastContainer />
       {iserror && <Error {...errorMessage} handleClose={handleClose} />}
-      <div className="header">
+      <div className={`header ${iserror?"blur":""}`}>
         <div className='header__icons'>
           <img className='header__logo' src={nitclogo} alt='nitclogo' />
           <h1 class='app_name'>Get Volunteers</h1>

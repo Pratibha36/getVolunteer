@@ -29,6 +29,7 @@ const ViewJob = ({ }) => {
     fetchJobWithId();
     checkApplied();
   }, [user]);
+  console.log(jobid)
 
   const fetchFacultyDetails = async (facultyId) => {
     try {

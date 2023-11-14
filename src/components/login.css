@@ -1,5 +1,10 @@
 /* OffCanvasLogin.css */
 
+.blur{
+  filter: blur(3px);
+  pointer-events: none;
+}
+
 .offcanvas-login {
   position: fixed;
   top: 0;

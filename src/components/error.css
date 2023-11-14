@@ -36,7 +36,6 @@
     }
 
     .closeButton{
-        width: 76px;
         margin: 7px;
         text-align: center;
         padding: 3px 0px;
@@ -45,13 +44,13 @@
         /* color: white; */
         /* background-color: var(--bodyBgColor); */
         border-radius: 7px;
-        border: var(--borderCheck);
-        width: 400px; /* Adjust the width as needed */
+        /* border: solid 2px black; */
+        width: 120px; /* Adjust the width as needed */
        }
 
     .closeButton:hover{
         background-color:var(--navBgColor);
-        color: white;
+        color: rgb(230, 22, 22);
         cursor: pointer;
         border-radius:7px ;
     }
