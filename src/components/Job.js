@@ -54,17 +54,6 @@ export const Job = (props) => {
       <EditCalendarTwoToneIcon />
       <p>Posted on: {isoToDate(props.postDate)}</p>
     </div>
-    <div className='job__key'>
-      <p>keywords</p>
-      <p>Java</p>
-      <p>hibernate</p>
-      <p>sql</p>
-      <p>database</p>
-    </div>
-    <div className='job_loc'>
-      <LocationOnTwoToneIcon /> <p>{props.location}</p>
-    </div>
-
   </div>)
 
   return (

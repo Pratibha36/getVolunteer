@@ -183,7 +183,7 @@ const Header = () => {
   const userLinks = (
     <ul className='header__nav'>
       <li><Link className='header__li' to="/">Home</Link></li>
-      <li><Link className='header__li' to="/">Jobs</Link></li>
+      <li><Link className='header__li' to="/">News&Announcements</Link></li>
       <l1 onClick={toggleLogin}>Login</l1>
       <Login />
     </ul>
@@ -191,8 +191,7 @@ const Header = () => {
   const facultyLinks = (
     <ul className='header__nav'>
       <li><Link className='header__li' to="/">Home</Link></li>
-      <li><Link className='header__li' to={"/postjob"}>Post Jobs</Link></li>
-      <li><Link className='header__li' to={"/appliedstudents"}>Applied Students</Link></li>
+      <li><Link className='header__li' to="/">News&Announcements</Link></li>
       <li onClick={logout}>Logout</li>
     </ul>
   );
@@ -200,7 +199,7 @@ const Header = () => {
     <ul className='header__nav'>
       <li><Link className='header__li' to="/">Home</Link></li>
       <li>Notification</li>
-      <li><Link className='header__li' to={"/appliedstudents"}>Applied Jobs</Link></li>
+      <li><Link className='header__li' to={"/appliedstudents"}>News&Announcements</Link></li>
       <li onClick={logout}>Logout</li>
     </ul>
   );
@@ -225,7 +224,7 @@ const Header = () => {
       <div className={`header ${iserror?"blur":""}`}>
         <div className='header__icons'>
           <img className='header__logo' src={nitclogo} alt='nitclogo' />
-          <h1 class='app_name'>Get Volunteers</h1>
+          <h1 class='app_name'>Ladies Hostel</h1>
         </div>
         <div>
           <div className='header__item'>

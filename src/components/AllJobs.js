@@ -12,8 +12,8 @@ const AllJobs = () => {
   const [{ user }, authdispatch] = useAuthStateValue();
   const [resjob, setresjob] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [curentPage,setCurrentPage]=useState(1);
-  const [postPerPage,setPostPerPage]=useState(4);
+  const [curentPage,setCurrentPage]=useState(7);
+  const [postPerPage,setPostPerPage]=useState(7);
   const [{ openloginmodal, iserror, errorMessage }, dipatch] = useStateValue();
   useEffect(() => {
     fetchAllJobs();
@@ -81,7 +81,7 @@ const AllJobs = () => {
       </div>) :
       (<div className={`alljobs ${iserror ? 'blur' : ''}`} >
         <h1>
-          All Jobs
+          News&Announcements
         </h1>
         <Pagination totalPosts={resjob.length} postsPerPage={postPerPage} setCurrentPage={setCurrentPage} currentPage={curentPage} />
         {loading ? (

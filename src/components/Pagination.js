@@ -9,7 +9,7 @@ export const Pagination = ({ totalPosts, postsPerPage,setCurrentPage,currentPage
     return (
         <div >
             {pages.map((page, index) => {
-                return <button className={page==currentPage?'paginationactive':"pagination"}  key={index} onClick={()=>{setCurrentPage(page)}}>{page}</button>;
+                return <button className={page==currentPage?'paginationactive':"pagination"}  key={index} onClick={()=>{setCurrentPage(page)}} >{page}</button>;
             })}
         </div>
     );

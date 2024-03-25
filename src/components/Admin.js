@@ -12,6 +12,7 @@ import AdminTable from './AdminTable';
 import { useAuthStateValue } from '../context/AuthStateProvider'
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Pagination } from './Pagination';
   
 const { Header, Sider, Content } = Layout;
 
@@ -25,6 +26,27 @@ const Admin = () => {
   const [studuser,setstuduser]=useState([])
   const [jobs,setJobs]=useState([]);
   const navigate = useNavigate();
+  const [currentPageStudents, setCurrentPageStudents] = useState(1);
+  const [postsPerPageStudents, setPostsPerPageStudents] = useState(7);
+  
+  const [currentPageFaculty, setCurrentPageFaculty] = useState(1);
+  const [postsPerPageFaculty, setPostsPerPageFaculty] = useState(7);
+  
+  const [currentPageJobs, setCurrentPageJobs] = useState(1);
+  const [postsPerPageJobs, setPostsPerPageJobs] = useState(7);
+  
+  const lastPostIndexStudents = currentPageStudents * postsPerPageStudents;
+  const firstPostIndexStudents = lastPostIndexStudents - postsPerPageStudents;
+  
+  const lastPostIndexFaculty = currentPageFaculty * postsPerPageFaculty;
+  const firstPostIndexFaculty = lastPostIndexFaculty - postsPerPageFaculty;
+  
+  const lastPostIndexJobs = currentPageJobs * postsPerPageJobs;
+  const firstPostIndexJobs = lastPostIndexJobs - postsPerPageJobs;
+  
+  const currentStudentPosts = studuser.slice(firstPostIndexStudents, lastPostIndexStudents);
+  const currentFacultyPosts = facuser.slice(firstPostIndexFaculty, lastPostIndexFaculty);
+  const currentJobPosts = jobs.slice(firstPostIndexJobs, lastPostIndexJobs);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -80,11 +102,56 @@ const Admin = () => {
   const renderContent = () => {
     switch (activeKey) {
       case '1':
-        return <AdminTable users={studuser} userData={"student"} getAllJobs={getAllJobs} getAllUser={getAllUser} />;
+        return (
+          <div>
+            <Pagination
+              totalPosts={studuser.length}
+              postsPerPage={postsPerPageStudents}
+              setCurrentPage={setCurrentPageStudents}
+              currentPage={currentPageStudents}
+            />
+            <AdminTable
+              users={currentStudentPosts}
+              userData={"student"}
+              getAllJobs={getAllJobs}
+              getAllUser={getAllUser}
+            />
+          </div>
+        );
       case '2':
-        return <AdminTable users={facuser} userData={"faculty"} getAllJobs={getAllJobs} getAllUser={getAllUser}  />;
+        return (
+          <div>
+            <Pagination
+              totalPosts={facuser.length}
+              postsPerPage={postsPerPageFaculty}
+              setCurrentPage={setCurrentPageFaculty}
+              currentPage={currentPageFaculty}
+            />
+            <AdminTable
+              users={currentFacultyPosts}
+              userData={"faculty"}
+              getAllJobs={getAllJobs}
+              getAllUser={getAllUser}
+            />
+          </div>
+        );
       case '3':
-        return <AdminTable users={jobs} userData={"job"} getAllJobs={getAllJobs} getAllUser={getAllUser} />;
+        return (
+          <div>
+            <Pagination
+              totalPosts={jobs.length}
+              postsPerPage={postsPerPageJobs}
+              setCurrentPage={setCurrentPageJobs}
+              currentPage={currentPageJobs}
+            />
+            <AdminTable
+              users={currentJobPosts}
+              userData={"job"}
+              getAllJobs={getAllJobs}
+              getAllUser={getAllUser}
+            />
+          </div>
+        );
       case '4':
         break;
       default:
